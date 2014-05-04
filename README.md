@@ -42,14 +42,14 @@ Implementation details
 ####Notebook
 
 field       |type
--           |-
+---         |---
 **id**      |`id`
 title   |`string`
 
 ####Note
 
 field       |type
--           |-
+---         |---
 **id**      |`id`
 notebook_id |`foreign_key`
 title   |`string`
@@ -63,7 +63,7 @@ Future versions:
 ####Tag
 
 field       |type
--           |-
+---         |---
 **tag_id**  |`id`
 note_id   |`foreign_key`
 tag     |`string`
