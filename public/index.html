@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en" ng-app="BrainDumpApp">
+	<head>
+		<meta charset="utf-8" />
+		<title>BrainDump</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular-resource.js"></script>
+		<script src="app.js"></script>
+		<!-- Some styling to achieve a basic three column layout -->
+		<!-- Info on flex box styling: http://blog.teamtreehouse.com/flexbox-next-generation-css-layout-arrived -->
+		<style>
+
+			html, body {
+				height: 100%;
+			}
+
+			body {
+				font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+				font-weight: 300;
+				margin: 0;
+			
+				display: -webkit-flex;
+				display: flex;
+				-webkit-flex-direction: column;
+ 				flex-direction: column;
+ 			}
+
+			input, textarea, button {
+				font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+				font-size: 1em;
+			}
+			
+			input, textarea {
+				width: 100%;
+				box-sizing: border-box;
+			}
+
+			textarea {
+				-webkit-flex: 1;
+				flex: 1;
+			}
+
+			div#title {
+				background-color: black;
+				margin: 0;
+				padding: 0.45em 0.9em;
+
+				display: -webkit-flex;
+				display: flex;
+			}
+
+			div#title h1 {
+				font-size: 1.4em;
+				margin: 0;
+				padding: 0;
+				color: #cccccc;
+				font-weight: 300;
+			
+				-webkit-flex: 1;
+				flex: 1;
+			}
+
+			div#title span.light {
+				font-weight: 300;
+				color:  #44bbff;
+      		}
+
+			h2 {
+				font-size: 1em;
+				margin-top: 0;
+			}
+
+			div#app {
+				/* div#app is both a flex container... */
+				display: -webkit-flex;
+				display: flex;
+				/* ... and a flex item */
+				-webkit-flex: 1;
+				flex: 1;
+			}
+
+			div#notebooks, div#notes, div#note {
+				padding: 0.45em 0.9em;
+			}
+
+			div#notebooks, div#notes {
+				width: 15em;
+				border-right: 1px solid grey;
+			}
+
+			div#notebooks ul {
+				padding: 0;
+				border-top: 1px solid lightgrey;
+			}
+
+			div#notebooks li {
+				list-style-type: none;
+				padding: 0.5em 0;
+				border-bottom: 1px solid lightgrey;
+			}
+
+			div.noteListItem {
+				border-bottom: 1px solid lightgrey;
+			}
+
+			div#note {
+				/* div#app is both a flex container... */
+				display: -webkit-flex;
+				display: flex;
+				-webkit-flex-direction: column;
+ 				flex-direction: column;
+				/* ... and a flex item */
+				-webkit-flex: 1;
+				flex: 1;
+			}
+
+			form#noteForm {
+				/* div#app is both a flex container... */
+				display: -webkit-flex;
+				display: flex;
+				-webkit-flex-direction: column;
+ 				flex-direction: column;
+				/* ... and a flex item */
+				-webkit-flex: 1;
+				flex: 1;
+			}
+
+
+		</style>
+		
+	</head>
+	<body ng-controller="NotebookController" ng-init="init()">
+
+		<!-- Header -->
+		<div id="title"><h1><span class="light">Brain</span>Dump</h1> <button ng-click="createNote()">Add Note</button></div>
+
+		<div id="app">
+		<!-- Notebooks section -->
+		<div id="notebooks">
+			<h2>Notebooks:</h2>
+			<form name="notebookForm" id="notebookForm" novalidate>
+			<p>
+				<input type="text" placeholder="New Notebook" ng-model="newNotebook.title" required />
+				<button ng-click="addNotebook()" ng-disabled="notebookForm.$invalid || !notebookForm.$dirty">Add</button>
+			</p>
+			</form>
+			<ul>
+				<li ng-repeat="book in notebooks">
+					<a href="#" ng-click="selectNotebook(book)">{{book.title}}</a>
+					<span ng-if="book.noteCount > 0">
+						({{book.noteCount}})
+					</span>
+					&nbsp;<button ng-click="deleteNotebook(book)">delete</button>
+				</li>
+			</ul>
+		</div>
+
+		<!-- Notes section -->
+		<div id="notes">
+			<h2>{{selectedNotebook.title}}</h2>
+			<div class="noteListItem" ng-repeat="note in notes">
+				<p><a href="#" ng-click="selectNote(note)">{{note.title}}</a></p>
+				<p>{{note.updated*1000 | date:'medium'}}</p>
+			</div>
+			<div ng-if="notes.length == 0">
+				<p>No notes in {{selectedNotebook.title}}</p>
+			</div>
+		</div>
+
+		<!-- Note section -->
+		<div id="note" ng-hide="selectedNote == null">
+			
+			<form name="noteForm" id="noteForm" novalidate>		
+				<input type="text" placeholder="Title of your note" ng-model="selectedNote.title" required />
+				<div>{{selectedNote.updated*1000 | date:'medium'}}</div>
+				<input type="text" placeholder="If relevant, add a link here" ng-model="selectedNote.url" />
+				<textarea ng-model="selectedNote.content" placeholder="Type your note"></textarea>
+				<div>
+					<button ng-click="saveNote(selectedNote)" ng-disabled="noteForm.$invalid || !noteForm.$dirty">Save</button>
+					<button ng-click="deleteNote(selectedNote)">delete</button>
+				</div>
+			</form>
+		</div>
+		
+		</div>
+	</body>
+</html>
