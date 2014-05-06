@@ -76,7 +76,7 @@ A list of FAQs
 Todo
 ----
 
-A list of Todos
+* Use JAM Dependancy manager, http://jamjs.org
 
 Links & References
 ------------------
