@@ -1,4 +1,4 @@
-var toDoListApp = angular.module('BrainDumpApp', ['ngResource']);
+var toDoListApp = angular.module('BrainDumpApp', ['ngResource', 'textAngular']);
 
 // @TODO: Organize into different controllers
 toDoListApp.controller('NotebookController', function($scope, $http, $compile, $resource) {
@@ -91,7 +91,8 @@ toDoListApp.controller('NotebookController', function($scope, $http, $compile, $
 			return;
 		}
 
-		newNote = new NoteResource({ notebook_id: $scope.selectedNotebook.id, title: "New Note", url: "", content: "", created: Date.now()/1000, updated: Date.now()/1000 });
+		// @TODO: Let user switch between HTML or Text Notes
+		newNote = new NoteResource({ notebook_id: $scope.selectedNotebook.id, title: "New Note", url: "", type: "HTML", content: "", created: Date.now()/1000, updated: Date.now()/1000 });
 		$scope.notes.push(newNote);
 		$scope.selectedNotebook.noteCount = $scope.notes.length;
 		$scope.selectedNote = newNote;
@@ -99,13 +100,22 @@ toDoListApp.controller('NotebookController', function($scope, $http, $compile, $
 
 	$scope.saveNote = function(note) {
 		if (note.id == null) {
-			note.$save(function() {
-				$scope.noteForm.$setPristine();
-			});
+			note.$save(
+				function() {
+					$scope.noteForm.$setPristine();
+				},
+				function(error) {
+					alert(angular.toJson(error));
+				});
 		} else {
-			note.$update(function() {
-				$scope.noteForm.$setPristine();
-			});
+			note.$update(
+				function() {
+					$scope.noteForm.$setPristine();
+				},
+				function(error) {
+					console.log(angular.toJson(error, true));
+					alert(angular.toJson(error, true));
+				});
 		}
 	}
 
