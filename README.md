@@ -7,7 +7,7 @@ decided to take a shot at developing my own note takeing app.
 
 This project contains a very basic Proof-of-Concept-like HTML/Javascript based client. 
 
-Created by Wilco Menge (wilcomenge@gmail.com), the code is hosted at [github](https://github.com/wmenge/braindump-client) for the REST based backend API.
+Created by Wilco Menge (wilcomenge@gmail.com), the code is hosted at [github](https://github.com/wmenge/braindump-client)
 
 See [Braindump API](https://github.com/wmenge/braindump-api) for the REST based backend API.
 
