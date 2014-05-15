@@ -135,14 +135,14 @@
 		</style>
 		
 	</head>
-	<body ng-controller="NotebookController" ng-init="init()">
+	<body ng-controller="AppController">
 
 		<!-- Header -->
 		<div id="title"><h1><span class="light">Brain</span>Dump</h1> <button ng-click="createNote()">Add Note</button></div>
 
 		<div id="app">
 		<!-- Notebooks section -->
-		<div id="notebooks">
+		<div id="notebooks" ng-controller="NotebookListController" ng-init="init()">
 			<h2>Notebooks:</h2>
 			<form name="notebookForm" id="notebookForm" novalidate>
 			<p>
@@ -162,7 +162,7 @@
 		</div>
 
 		<!-- Notes section -->
-		<div id="notes">
+		<div id="notes" ng-controller="NoteListController" ng-hide="selectedNotebook == null">
 			<h2>{{selectedNotebook.title}}</h2>
 			<div class="noteListItem" ng-repeat="note in notes">
 				<p><a href="#" ng-click="selectNote(note)">{{note.title}}</a></p>
@@ -174,16 +174,17 @@
 		</div>
 
 		<!-- Note section -->
-		<div id="note" ng-hide="selectedNote == null">
+		<div id="note" ng-controller="NoteDetailController" ng-hide="note == null">
 			
 			<form name="noteForm" id="noteForm" novalidate>		
-				<input type="text" placeholder="Title of your note" ng-model="selectedNote.title" required />
-				<div>{{selectedNote.updated*1000 | date:'medium'}}</div>
-				<input type="text" placeholder="If relevant, add a link here" ng-model="selectedNote.url" />
-				<div class="text-angular" text-angular ng-model="selectedNote.content"></div>
+				<input type="text" placeholder="Title of your note" ng-model="note.title" required />
+				<div>{{note.updated*1000 | date:'medium'}}</div>
+				<input type="text" placeholder="If relevant, add a link here" ng-model="note.url" />
+				<!-- check http://dev.evernote.com/doc/articles/enml.php for everote html format -->
+				<div class="text-angular" text-angular ng-model="note.content"></div>
 				<div>
-					<button ng-click="saveNote(selectedNote)" ng-disabled="noteForm.$invalid || !noteForm.$dirty">Save</button>
-					<button ng-click="deleteNote(selectedNote)">delete</button>
+					<button ng-click="saveNote(note)" ng-disabled="noteForm.$invalid || !noteForm.$dirty">Save</button>
+					<button ng-click="deleteNote(note)">delete</button>
 				</div>
 			</form>
 		</div>

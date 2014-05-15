@@ -7,7 +7,10 @@ decided to take a shot at developing my own note takeing app.
 
 This project contains a very basic Proof-of-Concept-like HTML/Javascript based client. 
 
+Created by Wilco Menge (wilcomenge@gmail.com), the code is hosted at [github](https://github.com/wmenge/braindump-client) for the REST based backend API.
+
 See [Braindump API](https://github.com/wmenge/braindump-api) for the REST based backend API.
+
 
 Roadmap
 -------
@@ -77,6 +80,12 @@ Todo
 ----
 
 * Use JAM Dependancy manager, http://jamjs.org
+* Exand README into:
+
+README
+FAQ
+INSTALL
+CHANGE_LOG (for every release)
 
 Links & References
 ------------------
