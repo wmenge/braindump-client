@@ -19,13 +19,11 @@ Braindump can serve as a reasonable alternative to Evernote.
 
 **Currently supported features:**
 
-* Very crude Proof-of-Concept UI
 * Maintaining/retrieving Notebooks: A notebook contains a number of Notes
 * Maintaining/retrieving Notes: A note is a piece of plaintext contained in a Notebook
 
 **Planned features:**
 
-* Better UI
 * Simple admin console embedded in this project
 * Tagging of notes
 * Import/export of notes
@@ -82,10 +80,7 @@ Todo
 * Use JAM Dependancy manager, http://jamjs.org
 * Exand README into:
 
-README
-FAQ
-INSTALL
-CHANGE_LOG (for every release)
+README, FAQ, INSTALL, CHANGE_LOG (for every release)
 
 Links & References
 ------------------
