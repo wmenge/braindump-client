@@ -20,6 +20,7 @@ module.controller('NotebookListController', ['$scope', '$rootScope', 'NotebookSe
 	$scope.$on('notebooks.create', function(event, book) {
 		$scope.notebooks = NotebookService.notebooks;
 		$scope.selectNotebook(book);
+		$scope.newNotebook = {};
 		$scope.notebookForm.$setPristine();
 	});
 
@@ -32,7 +33,12 @@ module.controller('NotebookListController', ['$scope', '$rootScope', 'NotebookSe
 	}
 
 	$scope.selectNotebook = function(book) {
+		if (NotebookService.selectedNotebook) {
+			NotebookService.selectedNotebook.class = '';
+		}
+		book.class = 'active';
 		NotebookService.selectedNotebook = book;
+
 		$rootScope.$broadcast('notebooks.select', book);
 	}
 
@@ -64,17 +70,21 @@ module.controller('NoteListController', ['$scope', '$rootScope', 'NoteService', 
 	});
 
 	$scope.$on('notes.delete', function(event, note) {
-		console.log(1);
 		$scope.notes.splice($scope.notes.indexOf(note), 1);
 		
 		if (NoteService.selectedNote == note) {
-			console.log(2);
 			$scope.selectNote($scope.notes[0]);
 		}
 	});
 
 	$scope.selectNote = function(note) {
-		NoteService.selectedNote = note;		
+
+		if (NoteService.selectedNote) {
+			NoteService.selectedNote.class = '';
+		}
+		note.class = 'active';
+		NoteService.selectedNote = note;	
+		
 		$rootScope.$broadcast('notes.select', note);
 	}
 
@@ -93,6 +103,8 @@ module.controller('NoteDetailController', ['$scope', 'NoteService', function($sc
 	$scope.$on('notes.select', function(event, note) {
 		note.$get(function() {
 			$scope.note = note;
+			// bad hack as active class is stored note object
+			note.class = 'active';
 			// doesn't work. Why? Is note a future?
 			$scope.noteForm.$setPristine();
 		});
