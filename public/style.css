@@ -1,0 +1,63 @@
+.navbar {
+	margin-bottom: 0;
+}
+
+.navbar-brand {
+  height: 50px;
+  font-size: 25px;
+  line-height: 14px;
+  letter-spacing: -1px;
+}
+
+.navbar-brand #brain {
+	font-weight: lighter;
+	color:  #44bbff;
+}
+
+.navbar-brand #dump {
+	font-weight: normal;
+}
+
+.list-group-item {
+	border-left: 0;
+	border-right: 0;
+}
+
+.panel {
+	border-left: 0;
+	border-radius: 0;
+}
+
+.panel-heading {
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;	
+}
+
+.panel-heading .btn {
+	margin-top: -13px;
+	margin-bottom: -7px;
+}
+
+.panel-heading input {
+	font-weight: 500;
+	border: none;
+	background: none;
+	margin: 0;
+	/*margin-top: -2px;*/
+	padding: 0;
+	width: 100%;
+}
+
+.list-group-item:first-child {
+	border-top: 0;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+.list-group-item:last-child {
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+}
+
+.input-group-lg .form-control {
+	font-weight: bold;
+}

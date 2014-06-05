@@ -1,194 +1,149 @@
 <!doctype html>
 <html lang="en" ng-app="BrainDumpApp">
 	<head>
-		<meta charset="utf-8" />
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>BrainDump</title>
-		<script type="text/javascript" src="/ajax/libs/angularjs/1.2.9/angular.min.js"></script>
-		<script type="text/javascript" src="/ajax/libs/angularjs/1.2.9/angular-resource.js"></script>
-		<script type="text/javascript" src='/ajax/libs/angularjs/1.2.4/angular-sanitize.min.js'></script>
-		<script type="text/javascript" src='/ajax/libs/textAngular/1.1.2/textAngular.min.js'></script>
+		<script type="text/javascript" src="/libs/angularjs/1.2.9/angular.min.js"></script>
+		<script type="text/javascript" src="/libs/angularjs/1.2.9/angular-resource.js"></script>
+		<script type="text/javascript" src='/libs/angularjs/1.2.4/angular-sanitize.min.js'></script>
+		<script type="text/javascript" src='/libs/textAngular/1.1.2/textAngular.min.js'></script>
 		<script src="modules/notebooks.js"></script>
 		<script src="modules/notes.js"></script>
 		<script src="app.js"></script>
-		<link rel='stylesheet prefetch' href='/bootstrap/3.0.1/css/bootstrap.min.css'>
-		<link rel='stylesheet prefetch' href='/font-awesome/4.0.0/css/font-awesome.min.css'>
-		<!-- Some styling to achieve a basic three column layout -->
-		<!-- Info on flex box styling: http://blog.teamtreehouse.com/flexbox-next-generation-css-layout-arrived -->
+		<link rel='stylesheet prefetch' href='/libs/bootstrap/3.1.1/css/bootstrap.min.css'>
+		<link rel='stylesheet prefetch' href='/libs/bootstrap/3.1.1/css/bootstrap-theme.min.css'>
+		<link rel='stylesheet prefetch' href='/libs/font-awesome/4.1.0/css/font-awesome.min.css'>
+		<link rel='stylesheet prefetch' href='/layout.css'>
+		<link rel='stylesheet prefetch' href='/style.css'>
 		<style>
-
-			html, body {
-				height: 100%;
-			}
-
-			body {
-				font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
-				font-weight: 300;
-				margin: 0;
-			
-				display: -webkit-flex;
-				display: flex;
-				-webkit-flex-direction: column;
- 				flex-direction: column;
- 			}
-
-			form#noteForm > input, form#noteForm > textarea, form#noteForm > button {
-				font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
-				font-size: 1em;
-			}
-			
-			form#noteForm > input, form#noteForm > textarea {
-				width: 100%;
-				box-sizing: border-box;
-			}
-
-			div.text-angular, form#noteForm > textarea {
-				-webkit-flex: 1;
-				flex: 1;
-			}
-
-			div#title {
-				background-color: black;
-				margin: 0;
-				padding: 0.45em 0.9em;
-
-				display: -webkit-flex;
-				display: flex;
-			}
-
-			div#title h1 {
-				font-size: 1.4em;
-				margin: 0;
-				padding: 0;
-				color: #cccccc;
-				font-weight: 300;
-			
-				-webkit-flex: 1;
-				flex: 1;
-			}
-
-			div#title span.light {
-				font-weight: 300;
-				color:  #44bbff;
-      		}
-
-			h2 {
-				font-size: 1em;
-				margin-top: 0;
-			}
-
-			div#app {
-				/* div#app is both a flex container... */
-				display: -webkit-flex;
-				display: flex;
-				/* ... and a flex item */
-				-webkit-flex: 1;
-				flex: 1;
-			}
-
-			div#notebooks, div#notes, div#note {
-				padding: 0.45em 0.9em;
-			}
-
-			div#notebooks, div#notes {
-				width: 15em;
-				border-right: 1px solid grey;
-			}
-
-			div#notebooks ul {
-				padding: 0;
-				border-top: 1px solid lightgrey;
-			}
-
-			div#notebooks li {
-				list-style-type: none;
-				padding: 0.5em 0;
-				border-bottom: 1px solid lightgrey;
-			}
-
-			div.noteListItem {
-				border-bottom: 1px solid lightgrey;
-			}
-
-			div#note {
-				/* div#app is both a flex container... */
-				display: -webkit-flex;
-				display: flex;
-				-webkit-flex-direction: column;
- 				flex-direction: column;
-				/* ... and a flex item */
-				-webkit-flex: 1;
-				flex: 1;
-			}
-
-			form#noteForm {
-				/* div#app is both a flex container... */
-				display: -webkit-flex;
-				display: flex;
-				-webkit-flex-direction: column;
- 				flex-direction: column;
-				/* ... and a flex item */
-				-webkit-flex: 1;
-				flex: 1;
-			}
-
-
-		</style>
-		
+.ta-editor {
+  height: 300px;
+  overflow: scroll;
+  font-family: inherit;
+  font-size: 100%;
+}
+</style>
 	</head>
 	<body ng-controller="AppController">
 
 		<!-- Header -->
-		<div id="title"><h1><span class="light">Brain</span>Dump</h1> <button ng-click="createNote()">Add Note</button></div>
+		<div class="navbar navbar-inverse navbar-static-top" role="navigation">
+			<div class="navbar-header">
+				<span class="navbar-brand">
+					<span id="brain">Brain</span><span id="dump">Dump</span>
+				</span>
+			</div>
+<!--
+			<form class="navbar-form navbar-left form-inline" role="search" style="width: 250px;">
+				<div class="form-group">
+					<div class="input-group">
+						<input placeholder="Search" type="text" class="form-control">
+						<span class="input-group-btn">
+							<button class="btn btn-default" type="button">
+								<span class="glyphicon glyphicon-search"></span>
+							</button>
+						</span>
+					</div>
+				</div>
+			</form>
+-->
+			<button type="button" class="btn btn-default navbar-btn navbar-right" ng-click="createNote()">
+				<span class="glyphicon glyphicon-plus"></span> New note</button>			
+		</div>
 
 		<div id="app">
-		<!-- Notebooks section -->
-		<div id="notebooks" ng-controller="NotebookListController" ng-init="init()">
-			<h2>Notebooks:</h2>
-			<form name="notebookForm" id="notebookForm" novalidate>
-			<p>
-				<input type="text" placeholder="New Notebook" ng-model="newNotebook.title" required />
-				<button ng-click="addNotebook()" ng-disabled="notebookForm.$invalid || !notebookForm.$dirty">Add</button>
-			</p>
-			</form>
-			<ul>
-				<li ng-repeat="book in notebooks">
-					<a href="#" ng-click="selectNotebook(book)">{{book.title}}</a>
-					<span ng-if="book.noteCount > 0">
-						({{book.noteCount}})
-					</span>
-					&nbsp;<button ng-click="deleteNotebook(book)">delete</button>
-				</li>
-			</ul>
+
+			<!-- Notebooks section -->
+			<div  class="panel panel-default" id="notebooks" ng-controller="NotebookListController" ng-init="init()">
+
+				<div class="panel-heading">
+					<h3 class="panel-title">Notebooks
+	<!--					<div class="pull-right">
+							<button type="button" class="btn btn-default btn-sm" ng-click="createNote()">
+							<span class="glyphicon glyphicon-plus"></span></button>
+						</div>		-->
+					</h3>
+				</div>
+				
+				<div class="panel-body" style="padding: 0;">
+
+				<div class="list-group">
+					<a ng-repeat="book in notebooks" class="list-group-item" ng-class="book.class" ng-click="selectNotebook(book)">
+						{{book.title}}
+						<span class="badge pull-right">{{book.noteCount}}</span>
+					</a>
+				</div>
+
+				<form name="notebookForm"  class="panel panel-default" id="notebookForm" novalidate>
+
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="New Notebook" ng-model="newNotebook.title" required />
+						<span class="input-group-btn">
+							<button class="btn btn-default" type="button" ng-click="addNotebook()" ng-disabled="notebookForm.$invalid || !notebookForm.$dirty"><span class="glyphicon glyphicon-plus"></span></button>
+						</span>
+					</div><!-- /input-group -->
+				</form>
+			</div>
+
 		</div>
 
 		<!-- Notes section -->
-		<div id="notes" ng-controller="NoteListController" ng-hide="selectedNotebook == null">
-			<h2>{{selectedNotebook.title}}</h2>
-			<div class="noteListItem" ng-repeat="note in notes">
-				<p><a href="#" ng-click="selectNote(note)">{{note.title}}</a></p>
-				<p>{{note.updated*1000 | date:'medium'}}</p>
+		<div class="panel panel-default" id="notes" ng-controller="NoteListController" ng-hide="selectedNotebook == null">
+			<div class="panel-heading">
+				<h3 class="panel-title">{{selectedNotebook.title}}</h3>
 			</div>
-			<div ng-if="notes.length == 0">
-				<p>No notes in {{selectedNotebook.title}}</p>
+			<div class="panel-body" style="padding: 0;">
+				<div class="list-group">
+					<a class="noteListItem list-group-item" ng-repeat="note in notes" ng-click="selectNote(note)"  ng-class="note.class">
+						<h5 class="list-group-item-heading">{{note.title}}</h5>
+						<p>{{note.updated*1000 | date:'medium'}}</p>
+					</a>
+
+				</div>
+				<div ng-if="notes.length == 0">
+					<p class="text-center" style="padding: 15px;">
+						<small><strong>No notes</strong> in this notebook. You can create a <a href="#"  ng-click="createNote()">new note</a>.</small>
+					</p>
+
+				</div>
 			</div>
 		</div>
 
 		<!-- Note section -->
-		<div id="note" ng-controller="NoteDetailController" ng-hide="note == null">
-			
-			<form name="noteForm" id="noteForm" novalidate>		
-				<input type="text" placeholder="Title of your note" ng-model="note.title" required />
-				<div>{{note.updated*1000 | date:'medium'}}</div>
-				<input type="text" placeholder="If relevant, add a link here" ng-model="note.url" />
-				<!-- check http://dev.evernote.com/doc/articles/enml.php for everote html format -->
-				<div class="text-angular" text-angular ng-model="note.content"></div>
-				<div>
-					<button ng-click="saveNote(note)" ng-disabled="noteForm.$invalid || !noteForm.$dirty">Save</button>
-					<button ng-click="deleteNote(note)">delete</button>
+		<form name="noteForm" id="noteForm" novalidate role="form" ng-controller="NoteDetailController" ng-hide="note == null">
+
+			<div id="note" class="panel panel-default">
+
+				<div class="panel-heading">
+					<input class="panel-title" type="text" placeholder="Title of your note" ng-model="note.title" required />
+
+					<div>
+						<button ng-click="saveNote(note)" ng-disabled="noteForm.$invalid || !noteForm.$dirty" type="button" class="btn btn-default btn-sm">
+							<span class="glyphicon glyphicon-save"></span> Save
+						</button>
+						<button ng-click="deleteNote(note)" type="button" class="btn btn-default btn-sm">
+							<span class="glyphicon glyphicon-trash"></span> Delete
+						</button>
+					</div>		
 				</div>
-			</form>
-		</div>
-		
-		</div>
+			
+
+				<div class="panel-body">
+
+					<div class="form-group input-group">
+						<p class="form-control-static">
+							<strong>Modified:</strong> {{note.updated*1000 | date:'medium'}}
+						</p>
+					</div>
+
+					<div class="form-group">
+						<input class="form-control" type="text" placeholder="If relevant, add a link here" ng-model="note.url" />
+					</div>
+
+					<!-- check http://dev.evernote.com/doc/articles/enml.php for everote html format -->
+					<div class="text-angular" text-angular ng-model="note.content"></div>
+
 	</body>
 </html>
