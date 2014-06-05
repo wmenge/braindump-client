@@ -6,7 +6,6 @@ notebooksModule.factory('Notebooks', ['$resource', function($resource) {
 		{ id: '@id' });
 }]);
 
-// TODO: Rely less on events for tight logic, use callbacks instead
 notebooksModule.service( 'NotebookService', [ '$rootScope', 'Notebooks', function($rootScope, Notebooks) {
 
 	var service = {
