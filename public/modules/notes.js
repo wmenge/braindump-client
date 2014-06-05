@@ -20,7 +20,7 @@ notesModules.service( 'NoteService', [ '$rootScope', 'Notes', function($rootScop
 		createNote: function(book) {
 			newNote = new Notes({ 
 				notebook_id: book.id, 
-				title: "New note", 
+				//title: "New note", 
 				url: "", 
 				type: "HTML", 
 				content: "", 
