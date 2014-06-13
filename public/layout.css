@@ -1,64 +1,72 @@
 html, body {
 	height: 100%;
-}
-
-body {
 	margin: 0;
-
-	display: -webkit-flex;
-	display: flex;
-	-webkit-flex-direction: column;
-		flex-direction: column;
-}
-
-
-form#noteForm > input, form#noteForm > textarea {
-	width: 100%;
-	box-sizing: border-box;
-}
-
-div.text-angular, form#noteForm > textarea {
-	-webkit-flex: 1;
-	flex: 1;
 }
 
 div#app {
-	/* div#app is both a flex container... */
-	display: -webkit-flex;
-	display: flex;
-	/* ... and a flex item */
-	-webkit-flex: 1;
-	flex: 1;
+	position: absolute;
+	top: 51px;
+	bottom: 0;
+	width: 100%;
 }
 
 div#notebooks {
+	top: 0;
+	
 	width: 200px;
+	height: 100%;
+	
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-direction: column;
+	flex-direction: column;
 }
 
 div#notes {
+	position: absolute;
+	
+	top: 0;
+	left: 200px;
+
 	width: 250px;
+	height: 100%;
+
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-direction: column;
+	flex-direction: column;
+}
+
+div#notebooks .panel-body, div#notes .panel-body {
+	-webkit-flex: 1;
+	flex: 1;
+	overflow-y: scroll;	
 }
 
 div#note {
-	/* div#note is both a flex container... */
+	position: absolute;
+
+	top: 0;
+	left: 450px;
+	right: 0;
+
+	height: 100%;
+	
 	display: -webkit-flex;
 	display: flex;
 	-webkit-flex-direction: column;
 	flex-direction: column;
-	/* ... and a flex item */
-	-webkit-flex: 1;
-	flex: 1;
 }
 
-form#noteForm, div#note, div#note .panel-body {
-	/* div#noteForm is both a flex container... */
+div#note .panel-body {
+	-webkit-flex: 1;
+	flex: 1;
+
 	display: -webkit-flex;
 	display: flex;
 	-webkit-flex-direction: column;
 	flex-direction: column;
-	/* ... and a flex item */
-	-webkit-flex: 1;
-	flex: 1;
+
 }
 
 div#note .panel-heading {
@@ -72,7 +80,7 @@ div#note .panel-heading input {
 } 
 
 .text-angular {
-	/* div#noteForm is both a flex container... */
+	/* div.text-angular is both a flex container... */
 	display: -webkit-flex;
 	display: flex;
 	-webkit-flex-direction: column;
@@ -82,7 +90,7 @@ div#note .panel-heading input {
 	flex: 1;
 }
 .ta-editor {
-		-webkit-flex: 1;
+	-webkit-flex: 1;
 	flex: 1;
 	overflow: scroll;
 }

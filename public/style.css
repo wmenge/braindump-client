@@ -1,5 +1,6 @@
 .navbar {
 	margin-bottom: 0;
+	padding-right: 15px;
 }
 
 .navbar-brand {
@@ -26,26 +27,34 @@
 .panel {
 	border-left: 0;
 	border-radius: 0;
+	margin-bottom: 0;
 }
 
 .panel-heading {
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;	
+	height: 38px;
+	overflow: visible;
 }
 
 .panel-heading .btn {
-	margin-top: -13px;
-	margin-bottom: -7px;
+	margin-top: -8px;
+}
+
+.panel-heading .pull-right .btn {
+	margin-top: -6px;
 }
 
 .panel-heading input {
 	font-weight: 500;
 	border: none;
 	background: none;
-	margin: 0;
-	/*margin-top: -2px;*/
+	margin: -2px 0;
 	padding: 0;
-	width: 100%;
+}
+
+#notebooks .panel-body, #notes .panel-body {
+	padding: 0;
 }
 
 .list-group-item:first-child {

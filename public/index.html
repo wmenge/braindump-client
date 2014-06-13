@@ -17,16 +17,28 @@
 		<link rel='stylesheet prefetch' href='/libs/font-awesome/4.1.0/css/font-awesome.min.css'>
 		<link rel='stylesheet prefetch' href='/layout.css'>
 		<link rel='stylesheet prefetch' href='/style.css'>
-		<style>
-.ta-editor {
-  height: 300px;
-  overflow: scroll;
-  font-family: inherit;
-  font-size: 100%;
-}
-</style>
 	</head>
 	<body ng-controller="AppController">
+
+		<!-- Modal dialog: create notebook -->
+		<script type="text/ng-template" id="myModalContent.html">
+	    
+	    <div class="modal-header">
+	            <h3 class="modal-title">I'm a modal!</h3>
+	        </div>
+	        <div class="modal-body">
+	            <ul>
+	                <li ng-repeat="item in items">
+	                    <a ng-click="selected.item = item">{{ item }}</a>
+	                </li>
+	            </ul>
+	            Selected: <b>{{ selected.item }}</b>
+	        </div>
+	        <div class="modal-footer">
+	            <button class="btn btn-primary" ng-click="ok()">OK</button>
+	            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+	        </div>
+	    </script>
 
 		<!-- Header -->
 		<div class="navbar navbar-inverse navbar-static-top" role="navigation">
@@ -56,18 +68,20 @@
 		<div id="app">
 
 			<!-- Notebooks section -->
-			<div  class="panel panel-default" id="notebooks" ng-controller="NotebookListController" ng-init="init()">
+			<div class="panel panel-default" id="notebooks" ng-controller="NotebookListController" ng-init="init()">
 
 				<div class="panel-heading">
 					<h3 class="panel-title">Notebooks
-	<!--					<div class="pull-right">
-							<button type="button" class="btn btn-default btn-sm" ng-click="createNote()">
+						<div class="pull-right">
+							<button type="button" class="btn btn-default btn-xs">
 							<span class="glyphicon glyphicon-plus"></span></button>
-						</div>		-->
-					</h3>
+						</div>
+
+						</h3>
+					
 				</div>
 				
-				<div class="panel-body" style="padding: 0;">
+				<div class="panel-body">
 
 				<div class="list-group">
 					<a ng-repeat="book in notebooks" class="list-group-item" ng-class="book.class" ng-click="selectNotebook(book)">
@@ -76,15 +90,15 @@
 					</a>
 				</div>
 
-				<form name="notebookForm"  class="panel panel-default" id="notebookForm" novalidate>
+				<!--<form name="notebookForm"  class="panel panel-default" id="notebookForm" novalidate>
 
 					<div class="input-group">
 						<input type="text" class="form-control" placeholder="New Notebook" ng-model="newNotebook.title" required />
 						<span class="input-group-btn">
 							<button class="btn btn-default" type="button" ng-click="addNotebook()" ng-disabled="notebookForm.$invalid || !notebookForm.$dirty"><span class="glyphicon glyphicon-plus"></span></button>
 						</span>
-					</div><!-- /input-group -->
-				</form>
+					</div>
+				</form>-->
 			</div>
 
 		</div>
@@ -92,9 +106,16 @@
 		<!-- Notes section -->
 		<div class="panel panel-default" id="notes" ng-controller="NoteListController" ng-hide="selectedNotebook == null">
 			<div class="panel-heading">
-				<h3 class="panel-title">{{selectedNotebook.title}}</h3>
+				<h3 class="panel-title">{{selectedNotebook.title}}
+
+					<div class="pull-right">
+						<button type="button" class="btn btn-default btn-xs">
+						<span class="caret"></button>
+					</div>
+				</h3>
+
 			</div>
-			<div class="panel-body" style="padding: 0;">
+			<div class="panel-body">
 				<div class="list-group">
 					<a class="noteListItem list-group-item" ng-repeat="note in notes" ng-click="selectNote(note)"  ng-class="note.class">
 						<h5 class="list-group-item-heading">{{note.title}}</h5>
