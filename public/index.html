@@ -1,87 +1,87 @@
 <!doctype html>
 <html lang="en" ng-app="BrainDumpApp">
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>BrainDump</title>
-		<script type="text/javascript" src="/libs/angularjs/1.2.9/angular.min.js"></script>
-		<script type="text/javascript" src="/libs/angularjs/1.2.9/angular-resource.js"></script>
-		<script type="text/javascript" src='/libs/angularjs/1.2.4/angular-sanitize.min.js'></script>
-		<script type="text/javascript" src='/libs/textAngular/1.1.2/textAngular.min.js'></script>
-		<script src="modules/notebooks.js"></script>
-		<script src="modules/notes.js"></script>
-		<script src="app.js"></script>
-		<link rel='stylesheet prefetch' href='/libs/bootstrap/3.1.1/css/bootstrap.min.css'>
-		<link rel='stylesheet prefetch' href='/libs/bootstrap/3.1.1/css/bootstrap-theme.min.css'>
-		<link rel='stylesheet prefetch' href='/libs/font-awesome/4.1.0/css/font-awesome.min.css'>
-		<link rel='stylesheet prefetch' href='/layout.css'>
-		<link rel='stylesheet prefetch' href='/style.css'>
-	</head>
-	<body ng-controller="AppController">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>BrainDump</title>
+	<script type="text/javascript" src="/libs/angularjs/1.2.9/angular.min.js"></script>
+	<script type="text/javascript" src="/libs/angularjs/1.2.9/angular-resource.js"></script>
+	<script type="text/javascript" src='/libs/angularjs/1.2.4/angular-sanitize.min.js'></script>
+	<script type="text/javascript" src='/libs/textAngular/1.1.2/textAngular.min.js'></script>
+	<script src="modules/notebooks.js"></script>
+	<script src="modules/notes.js"></script>
+	<script src="app.js"></script>
+	<link rel='stylesheet prefetch' href='/libs/bootstrap/3.1.1/css/bootstrap.min.css'>
+	<link rel='stylesheet prefetch' href='/libs/bootstrap/3.1.1/css/bootstrap-theme.min.css'>
+	<link rel='stylesheet prefetch' href='/libs/font-awesome/4.1.0/css/font-awesome.min.css'>
+	<link rel='stylesheet prefetch' href='/layout.css'>
+	<link rel='stylesheet prefetch' href='/style.css'>
+</head>
+<body ng-controller="AppController">
 
-		<!-- Modal dialog: create notebook -->
-		<script type="text/ng-template" id="myModalContent.html">
-	    
-	    <div class="modal-header">
-	            <h3 class="modal-title">I'm a modal!</h3>
-	        </div>
-	        <div class="modal-body">
-	            <ul>
-	                <li ng-repeat="item in items">
-	                    <a ng-click="selected.item = item">{{ item }}</a>
-	                </li>
-	            </ul>
-	            Selected: <b>{{ selected.item }}</b>
-	        </div>
-	        <div class="modal-footer">
-	            <button class="btn btn-primary" ng-click="ok()">OK</button>
-	            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-	        </div>
-	    </script>
+	<!-- Modal dialog: create notebook -->
+	<script type="text/ng-template" id="myModalContent.html">
 
-		<!-- Header -->
-		<div class="navbar navbar-inverse navbar-static-top" role="navigation">
-			<div class="navbar-header">
-				<span class="navbar-brand">
-					<span id="brain">Brain</span><span id="dump">Dump</span>
-				</span>
-			</div>
-<!--
-			<form class="navbar-form navbar-left form-inline" role="search" style="width: 250px;">
-				<div class="form-group">
-					<div class="input-group">
-						<input placeholder="Search" type="text" class="form-control">
-						<span class="input-group-btn">
-							<button class="btn btn-default" type="button">
-								<span class="glyphicon glyphicon-search"></span>
-							</button>
-						</span>
-					</div>
-				</div>
-			</form>
--->
-			<button type="button" class="btn btn-default navbar-btn navbar-right" ng-click="createNote()">
-				<span class="glyphicon glyphicon-plus"></span> New note</button>			
+		<div class="modal-header">
+			<h3 class="modal-title">I'm a modal!</h3>
 		</div>
+		<div class="modal-body">
+			<ul>
+				<li ng-repeat="item in items">
+					<a ng-click="selected.item = item">{{ item }}</a>
+				</li>
+			</ul>
+			Selected: <b>{{ selected.item }}</b>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-primary" ng-click="ok()">OK</button>
+			<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+		</div>
+	</script>
 
-		<div id="app">
-
-			<!-- Notebooks section -->
-			<div class="panel panel-default" id="notebooks" ng-controller="NotebookListController" ng-init="init()">
-
-				<div class="panel-heading">
-					<h3 class="panel-title">Notebooks
-						<div class="pull-right">
-							<button type="button" class="btn btn-default btn-xs">
-							<span class="glyphicon glyphicon-plus"></span></button>
-						</div>
-
-						</h3>
-					
+	<!-- Header -->
+	<div class="navbar navbar-inverse navbar-static-top" role="navigation">
+		<div class="navbar-header">
+			<span class="navbar-brand">
+				<span id="brain">Brain</span><span id="dump">Dump</span>
+			</span>
+		</div>
+		<!--
+		<form class="navbar-form navbar-left form-inline" role="search" style="width: 250px;">
+			<div class="form-group">
+				<div class="input-group">
+					<input placeholder="Search" type="text" class="form-control">
+					<span class="input-group-btn">
+						<button class="btn btn-default" type="button">
+							<span class="glyphicon glyphicon-search"></span>
+						</button>
+					</span>
 				</div>
-				
-				<div class="panel-body">
+			</div>
+		</form>
+		-->
+		<button type="button" class="btn btn-default navbar-btn navbar-right" ng-click="createNote()">
+			<span class="glyphicon glyphicon-plus"></span> New note
+		</button>			
+	</div>
+
+	<div id="app">
+
+		<!-- Notebooks section -->
+		<div class="panel panel-default" id="notebooks" ng-controller="NotebookListController" ng-init="init()">
+
+			<div class="panel-heading">
+				<h3 class="panel-title">Notebooks
+					<div class="pull-right">
+						<button type="button" class="btn btn-default btn-xs">
+							<span class="glyphicon glyphicon-plus"></span>
+						</button>
+					</div>
+				</h3>
+			</div>
+
+			<div class="panel-body">
 
 				<div class="list-group">
 					<a ng-repeat="book in notebooks" class="list-group-item" ng-class="book.class" ng-click="selectNotebook(book)">
@@ -90,17 +90,18 @@
 					</a>
 				</div>
 
-				<!--<form name="notebookForm"  class="panel panel-default" id="notebookForm" novalidate>
+					<!--
+					<form name="notebookForm"  class="panel panel-default" id="notebookForm" novalidate>
 
-					<div class="input-group">
-						<input type="text" class="form-control" placeholder="New Notebook" ng-model="newNotebook.title" required />
-						<span class="input-group-btn">
-							<button class="btn btn-default" type="button" ng-click="addNotebook()" ng-disabled="notebookForm.$invalid || !notebookForm.$dirty"><span class="glyphicon glyphicon-plus"></span></button>
-						</span>
-					</div>
-				</form>-->
+						<div class="input-group">
+							<input type="text" class="form-control" placeholder="New Notebook" ng-model="newNotebook.title" required />
+							<span class="input-group-btn">
+								<button class="btn btn-default" type="button" ng-click="addNotebook()" ng-disabled="notebookForm.$invalid || !notebookForm.$dirty"><span class="glyphicon glyphicon-plus"></span></button>
+							</span>
+						</div>
+					</form>
+				-->
 			</div>
-
 		</div>
 
 		<!-- Notes section -->
@@ -110,7 +111,8 @@
 
 					<div class="pull-right">
 						<button type="button" class="btn btn-default btn-xs">
-						<span class="caret"></button>
+							<span class="caret"></span>
+						</button>
 					</div>
 				</h3>
 
@@ -132,7 +134,6 @@
 			</div>
 		</div>
 
-		<!-- Note section -->
 		<form name="noteForm" id="noteForm" novalidate role="form" ng-controller="NoteDetailController" ng-hide="note == null">
 
 			<div id="note" class="panel panel-default">
@@ -149,7 +150,7 @@
 						</button>
 					</div>		
 				</div>
-			
+
 
 				<div class="panel-body">
 
@@ -166,5 +167,9 @@
 					<!-- check http://dev.evernote.com/doc/articles/enml.php for everote html format -->
 					<div class="text-angular" text-angular ng-model="note.content"></div>
 
-	</body>
+				</div>
+			</div>
+		</form>
+	</div>
+</body>
 </html>
