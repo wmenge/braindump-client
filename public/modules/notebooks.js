@@ -9,7 +9,7 @@ notebooksModule.factory('Notebooks', ['$resource', function($resource) {
 notebooksModule.service( 'NotebookService', [ '$rootScope', 'Notebooks', function($rootScope, Notebooks) {
 
 	var service = {
-		selectedNotebook: null, // TODO: Create a select function on the service?
+		selectedNotebook: null,
 		notebooks: [],
 		getList: function () {
 			service.notebooks = Notebooks.query(function() {
@@ -27,6 +27,10 @@ notebooksModule.service( 'NotebookService', [ '$rootScope', 'Notebooks', functio
 				service.notebooks.splice(service.notebooks.indexOf(book), 1);
 				$rootScope.$broadcast('notebooks.delete', book);
 			});
+		},
+		selectNotebook: function(book) {
+			service.selectedNotebook = book;
+			$rootScope.$broadcast('notebooks.select', book);
 		}
 	} 
    return service;

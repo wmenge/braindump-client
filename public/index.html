@@ -84,7 +84,7 @@
 			<div class="panel-body">
 
 				<div class="list-group">
-					<a ng-repeat="book in notebooks" class="list-group-item" ng-class="book.class" ng-click="selectNotebook(book)">
+					<a ng-repeat="book in notebooks" class="list-group-item" ng-class="{active: (noteBookIsSelected(book))}" ng-click="selectNotebook(book)">
 						{{book.title}}
 						<span class="badge pull-right">{{book.noteCount}}</span>
 					</a>
@@ -119,7 +119,7 @@
 			</div>
 			<div class="panel-body">
 				<div class="list-group">
-					<a class="noteListItem list-group-item" ng-repeat="note in notes" ng-click="selectNote(note)"  ng-class="note.class">
+					<a class="noteListItem list-group-item" ng-repeat="note in notes" ng-click="selectNote(note)" ng-class="{active: (noteIsSelected(note))}">
 						<h5 class="list-group-item-heading">{{note.title}}</h5>
 						<p>{{note.updated*1000 | date:'medium'}}</p>
 					</a>

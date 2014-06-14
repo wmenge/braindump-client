@@ -10,7 +10,7 @@ notesModules.factory('Notes', ['$resource', function($resource) {
 notesModules.service( 'NoteService', [ '$rootScope', 'Notes', function($rootScope, Notes) {
 
 	var service = {
-		selectedNote: null, // TODO: Create a select function on the service?
+		selectedNote: null,
 		notes: [],
 		getList: function(book) {
 			service.notes = Notes.query({notebookId: book.id }, function() {
@@ -20,7 +20,6 @@ notesModules.service( 'NoteService', [ '$rootScope', 'Notes', function($rootScop
 		createNote: function(book) {
 			newNote = new Notes({ 
 				notebook_id: book.id, 
-				//title: "New note", 
 				url: "", 
 				type: "HTML", 
 				content: "", 
@@ -28,6 +27,7 @@ notesModules.service( 'NoteService', [ '$rootScope', 'Notes', function($rootScop
 				updated: Date.now()/1000 });
 			service.notes.push(newNote);
 			book.noteCount++;
+			service.selectedNote = newNote;
 			$rootScope.$broadcast('notes.created', newNote);
 		},
 		saveNote: function(note) {
@@ -49,6 +49,10 @@ notesModules.service( 'NoteService', [ '$rootScope', 'Notes', function($rootScop
 					$rootScope.$broadcast('notes.delete', note);
 				});
 			}	
+		},
+		selectNote: function(note) {
+			service.selectedNote = note;
+			$rootScope.$broadcast('notes.select', note);
 		}
 	} 
    return service;
