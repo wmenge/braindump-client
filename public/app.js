@@ -2,11 +2,24 @@ var module = angular.module('BrainDumpApp', ['ngResource', 'textAngular', 'brain
 
 module.controller('AppController', [ '$scope', 'NotebookService', 'NoteService', function($scope, NotebookService, NoteService) {
 
+	$scope.search = function() {
+		if (NotebookService.selectedNotebook != null) {
+			NoteService.getList(NotebookService.selectedNotebook, $scope.query);
+			//console.log('test');
+		}
+	}
+
 	$scope.createNote = function() {
 		if (NotebookService.selectedNotebook != null) {
 			NoteService.createNote(NotebookService.selectedNotebook);
 		}
 	}
+
+	$scope.$on('notebooks.select', function(event, book) {
+		$scope.query = '';
+	});
+
+	$scope.query = '';
 
 }]);
 
@@ -60,8 +73,10 @@ module.controller('NoteListController', ['$scope', '$rootScope', 'NoteService', 
 		NoteService.getList(book);
 	});
 
-	$scope.$on('notes.load', function(event) {
+	$scope.$on('notes.load', function(event, search) {
 		$scope.notes = NoteService.notes;
+		$scope.search = search;
+		console.log($scope.search);
 		if ($scope.notes.length > 0) {
 			$scope.selectNote($scope.notes[0]);
 		}
@@ -83,9 +98,10 @@ module.controller('NoteListController', ['$scope', '$rootScope', 'NoteService', 
 		return note == NoteService.selectedNote;
 	}
 
-
 	$scope.selectedNotebook = null;
 	$scope.notes = NoteService.notes;
+
+	$scope.search = false;
 
 }]);
 
@@ -97,11 +113,17 @@ module.controller('NoteDetailController', ['$scope', 'NoteService', function($sc
 	});
 
 	$scope.$on('notes.select', function(event, note) {
-		note.$get(function() {
+
+		if (note.id) {
+			note.$get(function() {
+				$scope.note = note;
+				$scope.noteForm.$setPristine();
+			});			
+		} else {
 			$scope.note = note;
-			// doesn't work. Why? Is note a future?
 			$scope.noteForm.$setPristine();
-		});
+		}
+
 	});
 
 	$scope.$on('notes.created', function(event, note) {

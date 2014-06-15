@@ -12,9 +12,9 @@ notesModules.service( 'NoteService', [ '$rootScope', 'Notes', function($rootScop
 	var service = {
 		selectedNote: null,
 		notes: [],
-		getList: function(book) {
-			service.notes = Notes.query({notebookId: book.id }, function() {
-				$rootScope.$broadcast('notes.load');
+		getList: function(book, query) {
+			service.notes = Notes.query({notebookId: book.id, q: query }, function() {
+				$rootScope.$broadcast('notes.load', (query != null));
 			});
 		},
 		createNote: function(book) {

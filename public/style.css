@@ -10,6 +10,10 @@
   letter-spacing: -1px;
 }
 
+.navbar form {
+	margin-left: 40px;
+}
+
 .navbar-brand #brain {
 	font-weight: lighter;
 	color:  #44bbff;

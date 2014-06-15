@@ -47,20 +47,20 @@
 				<span id="brain">Brain</span><span id="dump">Dump</span>
 			</span>
 		</div>
-		<!--
+
 		<form class="navbar-form navbar-left form-inline" role="search" style="width: 250px;">
 			<div class="form-group">
 				<div class="input-group">
-					<input placeholder="Search" type="text" class="form-control">
+					<input placeholder="Search" type="text" class="form-control" ng-model="query">
 					<span class="input-group-btn">
-						<button class="btn btn-default" type="button">
+						<button type="submit"class="btn btn-default" type="button" ng-click="search()">
 							<span class="glyphicon glyphicon-search"></span>
 						</button>
 					</span>
 				</div>
 			</div>
 		</form>
-		-->
+	
 		<button type="button" class="btn btn-default navbar-btn navbar-right" ng-click="createNote()">
 			<span class="glyphicon glyphicon-plus"></span> New note
 		</button>			
@@ -107,7 +107,8 @@
 		<!-- Notes section -->
 		<div class="panel panel-default" id="notes" ng-controller="NoteListController" ng-hide="selectedNotebook == null">
 			<div class="panel-heading">
-				<h3 class="panel-title">{{selectedNotebook.title}}
+				<h3 class="panel-title">{{selectedNotebook.title}} <span ng-if="search">(filtered)</span>
+
 
 					<div class="pull-right">
 						<button type="button" class="btn btn-default btn-xs">
@@ -126,8 +127,12 @@
 
 				</div>
 				<div ng-if="notes.length == 0">
-					<p class="text-center" style="padding: 15px;">
+					<p class="text-center" style="padding: 15px;" ng-if="!search">
 						<small><strong>No notes</strong> in this notebook. You can create a <a href="#"  ng-click="createNote()">new note</a>.</small>
+					</p>
+
+					<p class="text-center" style="padding: 15px;" ng-if="search">
+						<small><strong>No search result</strong> found. Try again with a different terms or try searching in a different notebook.
 					</p>
 
 				</div>
