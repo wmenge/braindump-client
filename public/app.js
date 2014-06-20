@@ -1,11 +1,10 @@
-var module = angular.module('BrainDumpApp', ['ngResource', 'textAngular', 'braindump.notebooks', 'braindump.notes']);
+var module = angular.module('BrainDumpApp', ['ngResource', 'ui.bootstrap', 'textAngular', 'braindump.notebooks', 'braindump.notes']);
 
 module.controller('AppController', [ '$scope', 'NotebookService', 'NoteService', function($scope, NotebookService, NoteService) {
 
 	$scope.search = function() {
 		if (NotebookService.selectedNotebook != null) {
 			NoteService.getList(NotebookService.selectedNotebook, $scope.query);
-			//console.log('test');
 		}
 	}
 
@@ -76,7 +75,7 @@ module.controller('NoteListController', ['$scope', '$rootScope', 'NoteService', 
 	$scope.$on('notes.load', function(event, search) {
 		$scope.notes = NoteService.notes;
 		$scope.search = search;
-		console.log($scope.search);
+		
 		if ($scope.notes.length > 0) {
 			$scope.selectNote($scope.notes[0]);
 		}
