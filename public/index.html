@@ -112,9 +112,18 @@
 
 
 					<div class="pull-right">
-						<button type="button" class="btn btn-default btn-xs">
-							<span class="caret"></span>
-						</button>
+						<div class="btn-group" dropdown>
+							<button type="button" class="btn btn-default btn-xs dropdown-toggle">
+								<span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="#">Rename notebook...</a></li>
+								<li><a href="#" ng-click="createNote()">Create new note</a></li>
+								<li class="divider"></li>
+								<li><a href="#" ng-click="deleteNotebook(selectedNotebook)">Delete notebook...</a></li>
+							</ul>
+						</div>
+
 					</div>
 				</h3>
 

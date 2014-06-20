@@ -65,7 +65,7 @@ module.controller('NotebookListController', ['$scope', '$rootScope', 'NotebookSe
 
 }]);
 
-module.controller('NoteListController', ['$scope', '$rootScope', 'NoteService', function($scope, $rootScope, NoteService) {
+module.controller('NoteListController', ['$scope', '$rootScope', 'NotebookService', 'NoteService', function($scope, $rootScope, NotebookService, NoteService) {
 
 	$scope.$on('notebooks.select', function(event, book) {
 		$scope.selectedNotebook = book;
@@ -91,6 +91,10 @@ module.controller('NoteListController', ['$scope', '$rootScope', 'NoteService', 
 
 	$scope.selectNote = function(note) {
 		NoteService.selectNote(note);
+	}
+
+	$scope.deleteNotebook = function(notebook) {
+		NotebookService.deleteNotebook(notebook);
 	}
 
 	$scope.noteIsSelected = function(note) {
