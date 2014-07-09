@@ -151,17 +151,25 @@
 					</div>		
 				</div>
 
-
 				<div class="panel-body">
 
 					<div class="form-group input-group">
+						<label for="notebook_id">Modified</label>
 						<p class="form-control-static">
-							<strong>Modified:</strong> {{note.updated*1000 | date:'medium'}}
+							{{note.updated*1000 | date:'medium'}}
 						</p>
 					</div>
 
+
+					<div class="form-group input-group">
+						<label for="notebook_id">Notebook</label>
+						<select class="form-control" id="notebook_id" ng-model="note.notebook_id" ng-options="book.id as book.title for book in notebooks"></select>				
+					</div>
+
 					<div class="form-group">
-						<input class="form-control" type="text" placeholder="If relevant, add a link here" ng-model="note.url" />
+						<label for="url">Url</label>
+						
+						<input id="url" class="form-control" type="text" placeholder="If relevant, add a link here" ng-model="note.url" />
 					</div>
 
 					<!-- check http://dev.evernote.com/doc/articles/enml.php for everote html format -->
