@@ -21,26 +21,6 @@
 </head>
 <body ng-controller="AppController">
 
-	<!-- Modal dialog: create notebook -->
-	<script type="text/ng-template" id="myModalContent.html">
-
-		<div class="modal-header">
-			<h3 class="modal-title">I'm a modal!</h3>
-		</div>
-		<div class="modal-body">
-			<ul>
-				<li ng-repeat="item in items">
-					<a ng-click="selected.item = item">{{ item }}</a>
-				</li>
-			</ul>
-			Selected: <b>{{ selected.item }}</b>
-		</div>
-		<div class="modal-footer">
-			<button class="btn btn-primary" ng-click="ok()">OK</button>
-			<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-		</div>
-	</script>
-
 	<!-- Header -->
 	<div class="navbar navbar-inverse navbar-static-top" role="navigation">
 		<div class="navbar-header">
@@ -75,7 +55,7 @@
 			<div class="panel-heading">
 				<h3 class="panel-title">Notebooks
 					<div class="pull-right">
-						<button type="button" class="btn btn-default btn-xs">
+						<button type="button" class="btn btn-default btn-xs" ng-click="showNewNotebookModal()">
 							<span class="glyphicon glyphicon-plus"></span>
 						</button>
 					</div>
@@ -91,25 +71,30 @@
 					</a>
 				</div>
 
-					<!--
-					<form name="notebookForm"  class="panel panel-default" id="notebookForm" novalidate>
-
-						<div class="input-group">
-							<input type="text" class="form-control" placeholder="New Notebook" ng-model="newNotebook.title" required />
-							<span class="input-group-btn">
-								<button class="btn btn-default" type="button" ng-click="addNotebook()" ng-disabled="notebookForm.$invalid || !notebookForm.$dirty"><span class="glyphicon glyphicon-plus"></span></button>
-							</span>
-						</div>
-					</form>
-				-->
 			</div>
 		</div>
 
 		<!-- Notes section -->
 		<div class="panel panel-default" id="notes" ng-controller="NoteListController" ng-hide="selectedNotebook == null">
+
+			<!-- Modal dialog to create Notebook -->
+			<script type="text/ng-template" id="newNotebookModal.html">
+				<div class="modal-header">
+					<h3 class="modal-title">Create notebook</h3>
+				</div>
+				<div class="modal-body">
+					<form name="notebookForm" id="notebookForm" novalidate>
+						<input type="text" class="form-control" placeholder="Title of new notebook" ng-model="newNotebook.title" required />
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-primary" ng-click="ok()" ng-disabled="notebookForm.$invalid || !notebookForm.$dirty">Create</button>
+					<button class="btn btn-default" ng-click="cancel()">Cancel</button>
+				</div>
+			</script>
+
 			<div class="panel-heading">
 				<h3 class="panel-title">{{selectedNotebook.title}} <span ng-if="search">(filtered)</span>
-
 
 					<div class="pull-right">
 						<div class="btn-group" dropdown>
@@ -123,11 +108,11 @@
 								<li><a href="#" ng-click="deleteNotebook(selectedNotebook)">Delete notebook...</a></li>
 							</ul>
 						</div>
-
 					</div>
-				</h3>
 
+				</h3>
 			</div>
+
 			<div class="panel-body">
 				<div class="list-group">
 					<a class="noteListItem list-group-item" ng-repeat="note in notes" ng-click="selectNote(note)" ng-class="{active: (noteIsSelected(note))}">

@@ -16,10 +16,11 @@ notebooksModule.service( 'NotebookService', [ '$rootScope', 'Notebooks', functio
 				$rootScope.$broadcast('notebooks.load');
 			});		
 		},
-		addNotebook: function(book) {
+		addNotebook: function(book, success) {
 			Notebooks.save(book, function(newBook) {
 				service.notebooks.push(newBook);
 				$rootScope.$broadcast('notebooks.create', newBook);
+				success();
 			});
 		},
 		deleteNotebook: function(book) {

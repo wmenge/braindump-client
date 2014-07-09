@@ -1,6 +1,6 @@
 var module = angular.module('BrainDumpApp', ['ngResource', 'ui.bootstrap', 'textAngular', 'braindump.notebooks', 'braindump.notes']);
 
-module.controller('AppController', [ '$scope', 'NotebookService', 'NoteService', function($scope, NotebookService, NoteService) {
+module.controller('AppController', [ '$scope', '$modal', 'NotebookService', 'NoteService', function($scope, $modal, NotebookService, NoteService) {
 
 	$scope.search = function() {
 		if (NotebookService.selectedNotebook != null) {
@@ -20,6 +20,13 @@ module.controller('AppController', [ '$scope', 'NotebookService', 'NoteService',
 
 	$scope.query = '';
 
+  	$scope.showNewNotebookModal = function() {
+	    $modal.open({
+			templateUrl: 'newNotebookModal.html',
+      		controller: createNotebookModalInstanceCtrl,
+    	});
+	};
+
 }]);
 
 module.controller('NotebookListController', ['$scope', '$rootScope', 'NotebookService', function($scope, $rootScope, NotebookService) {
@@ -32,8 +39,6 @@ module.controller('NotebookListController', ['$scope', '$rootScope', 'NotebookSe
 	$scope.$on('notebooks.create', function(event, book) {
 		$scope.notebooks = NotebookService.notebooks;
 		$scope.selectNotebook(book);
-		$scope.newNotebook = {};
-		$scope.notebookForm.$setPristine();
 	});
 
 	$scope.$on('notes.delete', function(event, book) {
@@ -48,21 +53,11 @@ module.controller('NotebookListController', ['$scope', '$rootScope', 'NotebookSe
 		NotebookService.selectNotebook(book);
 	}
 
-	$scope.addNotebook = function() {
-		NotebookService.addNotebook($scope.newNotebook);
-	};
-
-	$scope.deleteNotebook = function(book) {
-		NotebookService.deleteNotebook(book);
-	}
-
 	$scope.noteBookIsSelected = function(book) {
 		return book == NotebookService.selectedNotebook;
 	}
 
 	$scope.notebooks = NotebookService.notebooks;
-	$scope.newNotebook = {};
-
 }]);
 
 module.controller('NoteListController', ['$scope', '$rootScope', 'NotebookService', 'NoteService', function($scope, $rootScope, NotebookService, NoteService) {
@@ -108,7 +103,11 @@ module.controller('NoteListController', ['$scope', '$rootScope', 'NotebookServic
 
 }]);
 
-module.controller('NoteDetailController', ['$scope', 'NoteService', function($scope, NoteService) {
+module.controller('NoteDetailController', ['$scope', 'NotebookService', 'NoteService', function($scope, NotebookService, NoteService) {
+
+	$scope.$on('notebooks.load', function(event) {
+		$scope.notebooks = NotebookService.notebooks;
+	});
 
 	$scope.$on('notebooks.select', function(event, book) {
 		$scope.note = null;
@@ -145,4 +144,23 @@ module.controller('NoteDetailController', ['$scope', 'NoteService', function($sc
 		NoteService.deleteNote(note);
 	};
 
+	$scope.notebooks = NotebookService.notebooks;
+
 }]);
+
+// Please note that $modalInstance represents a modal window (instance) dependency.
+// It is not the same as the $modal service used above.
+var createNotebookModalInstanceCtrl = function ($scope, $modalInstance, NotebookService) {
+
+	$scope.newNotebook = {};
+
+	$scope.ok = function () {
+		NotebookService.addNotebook($scope.newNotebook, function() {
+			$modalInstance.close();		
+		});
+	};
+
+	$scope.cancel = function () {
+		$modalInstance.dismiss('cancel');
+	};
+};
