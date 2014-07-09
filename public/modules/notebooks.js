@@ -3,7 +3,8 @@ var notebooksModule = angular.module('braindump.notebooks', ['ngResource']);
 notebooksModule.factory('Notebooks', ['$resource', function($resource) {
 	return $resource(
 		'http://braindump-api.local/notebooks/:id', 
-		{ id: '@id' });
+		{ id: '@id' },
+		{ update: { method: 'PUT' } });
 }]);
 
 notebooksModule.service( 'NotebookService', [ '$rootScope', 'Notebooks', function($rootScope, Notebooks) {
@@ -20,6 +21,15 @@ notebooksModule.service( 'NotebookService', [ '$rootScope', 'Notebooks', functio
 			Notebooks.save(book, function(newBook) {
 				service.notebooks.push(newBook);
 				$rootScope.$broadcast('notebooks.create', newBook);
+				success();
+			});
+		},
+		updateNotebook: function(book, success) {
+			console.log('2');
+			console.log(book);
+			book.$update(function() {
+				console.log('3');
+				$rootScope.$broadcast('notebooks.update');
 				success();
 			});
 		},

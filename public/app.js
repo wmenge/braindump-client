@@ -20,11 +20,14 @@ module.controller('AppController', [ '$scope', '$modal', 'NotebookService', 'Not
 
 	$scope.query = '';
 
-  	$scope.showNewNotebookModal = function() {
-	    $modal.open({
+	$scope.showNewNotebookModal = function() {
+		$modal.open({
 			templateUrl: 'newNotebookModal.html',
-      		controller: createNotebookModalInstanceCtrl,
-    	});
+			controller: notebookModalInstanceCtrl,
+			resolve: {
+				book: function() { return {}; }
+			}
+		});
 	};
 
 }]);
@@ -60,7 +63,7 @@ module.controller('NotebookListController', ['$scope', '$rootScope', 'NotebookSe
 	$scope.notebooks = NotebookService.notebooks;
 }]);
 
-module.controller('NoteListController', ['$scope', '$rootScope', 'NotebookService', 'NoteService', function($scope, $rootScope, NotebookService, NoteService) {
+module.controller('NoteListController', ['$scope', '$modal', '$rootScope', 'NotebookService', 'NoteService', function($scope, $modal, $rootScope, NotebookService, NoteService) {
 
 	$scope.$on('notebooks.select', function(event, book) {
 		$scope.selectedNotebook = book;
@@ -87,6 +90,16 @@ module.controller('NoteListController', ['$scope', '$rootScope', 'NotebookServic
 	$scope.selectNote = function(note) {
 		NoteService.selectNote(note);
 	}
+
+	$scope.showRenameNotebookModal = function(book) {
+		$modal.open({
+			templateUrl: 'updateNotebookModal.html',
+			controller: notebookModalInstanceCtrl,
+			resolve: {
+				book: function() { return book; }
+			}
+		});
+	};
 
 	$scope.deleteNotebook = function(notebook) {
 		NotebookService.deleteNotebook(notebook);
@@ -150,17 +163,26 @@ module.controller('NoteDetailController', ['$scope', 'NotebookService', 'NoteSer
 
 // Please note that $modalInstance represents a modal window (instance) dependency.
 // It is not the same as the $modal service used above.
-var createNotebookModalInstanceCtrl = function ($scope, $modalInstance, NotebookService) {
+var notebookModalInstanceCtrl = function ($scope, $modalInstance, NotebookService, book) {
 
-	$scope.newNotebook = {};
+	$scope.notebook = book;
 
-	$scope.ok = function () {
-		NotebookService.addNotebook($scope.newNotebook, function() {
+	$scope.create = function () {
+		NotebookService.addNotebook($scope.notebook, function() {
+			$modalInstance.close();		
+		});
+	};
+
+	$scope.update = function () {
+		console.log('1');
+		NotebookService.updateNotebook($scope.notebook, function() {
+			console.log('4');
 			$modalInstance.close();		
 		});
 	};
 
 	$scope.cancel = function () {
+		console.log($scope.notebook);
 		$modalInstance.dismiss('cancel');
 	};
 };

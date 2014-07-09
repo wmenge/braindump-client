@@ -31,6 +31,8 @@ notesModules.service( 'NoteService', [ '$rootScope', 'Notes', function($rootScop
 			$rootScope.$broadcast('notes.created', newNote);
 		},
 		saveNote: function(note) {
+			console.log('test');
+			console.log(note);
 			if (note.id == null) {
 				note.$save(function() {
 					$rootScope.$broadcast('notes.update');

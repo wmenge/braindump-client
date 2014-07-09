@@ -52,6 +52,22 @@
 		<!-- Notebooks section -->
 		<div class="panel panel-default" id="notebooks" ng-controller="NotebookListController" ng-init="init()">
 
+			<!-- Modal dialog to create Notebook -->
+			<script type="text/ng-template" id="newNotebookModal.html">
+				<div class="modal-header">
+					<h3 class="modal-title">Create notebook</h3>
+				</div>
+				<div class="modal-body">
+					<form name="notebookForm" id="notebookForm" novalidate>
+						<input type="text" class="form-control" placeholder="Title of new notebook" ng-model="notebook.title" required />
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-primary" ng-click="create()" ng-disabled="notebookForm.$invalid || !notebookForm.$dirty">Create</button>
+					<button class="btn btn-default" ng-click="cancel()">Cancel</button>
+				</div>
+			</script>
+
 			<div class="panel-heading">
 				<h3 class="panel-title">Notebooks
 					<div class="pull-right">
@@ -77,18 +93,18 @@
 		<!-- Notes section -->
 		<div class="panel panel-default" id="notes" ng-controller="NoteListController" ng-hide="selectedNotebook == null">
 
-			<!-- Modal dialog to create Notebook -->
-			<script type="text/ng-template" id="newNotebookModal.html">
+			<!-- Modal dialog to modify Notebook title -->
+			<script type="text/ng-template" id="updateNotebookModal.html">
 				<div class="modal-header">
-					<h3 class="modal-title">Create notebook</h3>
+					<h3 class="modal-title">Change title</h3>
 				</div>
 				<div class="modal-body">
 					<form name="notebookForm" id="notebookForm" novalidate>
-						<input type="text" class="form-control" placeholder="Title of new notebook" ng-model="newNotebook.title" required />
+						<input type="text" class="form-control" placeholder="Title of new notebook" ng-model="notebook.title" required />
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button class="btn btn-primary" ng-click="ok()" ng-disabled="notebookForm.$invalid || !notebookForm.$dirty">Create</button>
+					<button class="btn btn-primary" ng-click="update()" ng-disabled="notebookForm.$invalid || !notebookForm.$dirty">Ok</button>
 					<button class="btn btn-default" ng-click="cancel()">Cancel</button>
 				</div>
 			</script>
@@ -102,7 +118,7 @@
 								<span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu" role="menu">
-								<li><a href="#">Rename notebook...</a></li>
+								<li><a href="#" ng-click="showRenameNotebookModal(selectedNotebook)">Rename notebook...</a></li>
 								<li><a href="#" ng-click="createNote()">Create new note</a></li>
 								<li class="divider"></li>
 								<li><a href="#" ng-click="deleteNotebook(selectedNotebook)">Delete notebook...</a></li>
