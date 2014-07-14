@@ -14,6 +14,10 @@ module.controller('AppController', [ '$scope', 'NotebookService', 'NoteService',
 		}
 	}
 
+	$scope.createButtonDisabled = function() {
+		return (NotebookService.magicNotebook == NotebookService.selectedNotebook);
+	}
+
 	$scope.$on('notebooks.select', function(event, book) {
 		$scope.query = '';
 	});
@@ -25,12 +29,10 @@ module.controller('NotebookListController', ['$scope', '$modal', '$rootScope', '
 
 	$scope.$on('notebooks.load', function(event) {
 		$scope.notebooks = NotebookService.notebooks;
-		$scope.selectNotebook($scope.notebooks[0]);
 	});
 
 	$scope.$on('notebooks.create', function(event, book) {
 		$scope.notebooks = NotebookService.notebooks;
-		$scope.selectNotebook(book);
 	});
 
 	$scope.$on('notes.delete', function(event, book) {
@@ -172,6 +174,7 @@ module.controller('NoteDetailController', ['$scope', 'NotebookService', 'NoteSer
 		NoteService.deleteNote(note);
 	};
 
+	$scope.note = null;
 	$scope.notebooks = NotebookService.notebooks;
 
 }]);

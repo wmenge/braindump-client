@@ -10,25 +10,31 @@ notebooksModule.factory('Notebooks', ['$resource', function($resource) {
 notebooksModule.service( 'NotebookService', [ '$rootScope', 'Notebooks', function($rootScope, Notebooks) {
 
 	var service = {
+		// Magic notebook, contains all notes for user
+		magicNotebook: { title: 'All notes' },
 		selectedNotebook: null,
 		notebooks: [],
 		getList: function () {
 			service.notebooks = Notebooks.query(function() {
+
+				if (service.selectedNotebook == null) {
+					service.selectNotebook(service.magicNotebook);
+				}
+
 				$rootScope.$broadcast('notebooks.load');
+	
 			});		
 		},
 		addNotebook: function(book, success) {
 			Notebooks.save(book, function(newBook) {
 				service.notebooks.push(newBook);
 				$rootScope.$broadcast('notebooks.create', newBook);
+				service.selectNotebook(newBook);
 				success();
 			});
 		},
 		updateNotebook: function(book, success) {
-			console.log('2');
-			console.log(book);
 			book.$update(function() {
-				console.log('3');
 				$rootScope.$broadcast('notebooks.update');
 				success();
 			});
@@ -36,6 +42,9 @@ notebooksModule.service( 'NotebookService', [ '$rootScope', 'Notebooks', functio
 		deleteNotebook: function(book) {
 			Notebooks.delete(book, function() {
 				service.notebooks.splice(service.notebooks.indexOf(book), 1);
+				if (service.selectedNotebook == book) {
+					service.selectNotebook(service.magicNotebook);
+				}
 				$rootScope.$broadcast('notebooks.delete', book);
 			});
 		},

@@ -42,7 +42,7 @@
 			</div>
 		</form>
 	
-		<button type="button" class="btn btn-default navbar-btn navbar-right" ng-click="createNote()">
+		<button type="button" class="btn btn-default navbar-btn navbar-right" ng-disabled="createButtonDisabled()" ng-click="createNote()">
 			<span class="glyphicon glyphicon-plus"></span> Create note
 		</button>			
 	</div>
@@ -81,6 +81,10 @@
 			<div class="panel-body">
 
 				<div class="list-group">
+					<a class="list-group-item" ng-class="{active: (noteBookIsSelected(magicNotebook))}" ng-click="selectNotebook(magicNotebook)">
+						{{magicNotebook.title}}
+						<span class="badge pull-right">{{totalNoteCount()}}</span>
+					</a>
 					<a ng-repeat="book in notebooks" class="list-group-item" ng-class="{active: (noteBookIsSelected(book))}" ng-click="selectNotebook(book)">
 						{{book.title}}
 						<span class="badge pull-right">{{book.noteCount}}</span>
@@ -118,10 +122,10 @@
 								<span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu" role="menu">
-								<li><a href="#" ng-click="showRenameNotebookModal(selectedNotebook)">Rename notebook...</a></li>
-								<li><a href="#" ng-click="createNote()">Create new note</a></li>
+								<li ng-class="{disabled: (createButtonDisabled())}"><a href="#" ng-click="showRenameNotebookModal(selectedNotebook)">Rename notebook...</a></li>
+								<li ng-class="{disabled: (createButtonDisabled())}"><a href="#" ng-click="createNote()">Create new note</a></li>
 								<li class="divider"></li>
-								<li><a href="#" ng-click="deleteNotebook(selectedNotebook)">Delete notebook...</a></li>
+								<li ng-class="{disabled: (createButtonDisabled())}"><a href="#" ng-click="deleteNotebook(selectedNotebook)">Delete notebook...</a></li>
 							</ul>
 						</div>
 					</div>

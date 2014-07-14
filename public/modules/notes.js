@@ -1,21 +1,50 @@
-var notesModules = angular.module('braindump.notes', ['ngResource']);
+var notesModules = angular.module('braindump.notes', ['ngResource', 'braindump.notebooks']);
 
 notesModules.factory('Notes', ['$resource', function($resource) {
 	return $resource(
 		'http://braindump-api.local/notebooks/:notebookId/notes/:noteId', 
 		{ notebookId: '@notebook_id', noteId: '@id' },
-		{ update: { method: 'PUT' } });
+		{ update: { method: 'PUT' }});
 }]);
 
-notesModules.service( 'NoteService', [ '$rootScope', 'Notes', function($rootScope, Notes) {
+notesModules.factory('AllNotes', ['$resource', function($resource) {
+	return $resource('http://braindump-api.local/notes/:noteId',
+		{ noteId: '@id' },
+		{ update: { method: 'PUT' }});
+}]);
+
+notesModules.service( 'NoteService', [ '$rootScope', 'Notes', 'AllNotes', 'NotebookService', function($rootScope, Notes, AllNotes, NotebookService) {
 
 	var service = {
 		selectedNote: null,
 		notes: [],
 		getList: function(book, query) {
-			service.notes = Notes.query({notebookId: book.id, q: query }, function() {
-				$rootScope.$broadcast('notes.load', (query != null));
-			});
+
+			if (book == NotebookService.magicNotebook) {
+
+				service.notes = AllNotes.query({ q: query }, 
+					function() {
+						$rootScope.$broadcast('notes.load', (query != null));
+					},
+					function() {
+						$rootScope.$broadcast('notes.load', (query != null));
+						// Todo: show some error message
+						service.notes = [];
+					});
+
+			} else {
+
+				service.notes = Notes.query({notebookId: book.id, q: query }, 
+					function() {
+						$rootScope.$broadcast('notes.load', (query != null));
+					},
+					function() {
+						$rootScope.$broadcast('notes.load', (query != null));
+						// Todo: show some error message
+						service.notes = [];
+					});
+
+			}
 		},
 		createNote: function(book) {
 			newNote = new Notes({ 
