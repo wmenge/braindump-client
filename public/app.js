@@ -1,6 +1,6 @@
 var module = angular.module('BrainDumpApp', ['ngResource', 'ui.bootstrap', 'textAngular', 'braindump.notebooks', 'braindump.notes']);
 
-module.controller('AppController', [ '$scope', '$modal', 'NotebookService', 'NoteService', function($scope, $modal, NotebookService, NoteService) {
+module.controller('AppController', [ '$scope', 'NotebookService', 'NoteService', function($scope, NotebookService, NoteService) {
 
 	$scope.search = function() {
 		if (NotebookService.selectedNotebook != null) {
@@ -19,20 +19,9 @@ module.controller('AppController', [ '$scope', '$modal', 'NotebookService', 'Not
 	});
 
 	$scope.query = '';
-
-	$scope.showNewNotebookModal = function() {
-		$modal.open({
-			templateUrl: 'newNotebookModal.html',
-			controller: notebookModalInstanceCtrl,
-			resolve: {
-				book: function() { return {}; }
-			}
-		});
-	};
-
 }]);
 
-module.controller('NotebookListController', ['$scope', '$rootScope', 'NotebookService', function($scope, $rootScope, NotebookService) {
+module.controller('NotebookListController', ['$scope', '$modal', '$rootScope', 'NotebookService', function($scope, $modal, $rootScope, NotebookService) {
 
 	$scope.$on('notebooks.load', function(event) {
 		$scope.notebooks = NotebookService.notebooks;
@@ -60,17 +49,43 @@ module.controller('NotebookListController', ['$scope', '$rootScope', 'NotebookSe
 		return book == NotebookService.selectedNotebook;
 	}
 
+	$scope.showNewNotebookModal = function() {
+		$modal.open({
+			templateUrl: 'newNotebookModal.html',
+			controller: notebookModalInstanceCtrl,
+			resolve: {
+				book: function() { return {}; }
+			}
+		});
+	};
+
+	$scope.totalNoteCount = function() {
+		if ($scope.notebooks.length > 0) {
+			return $scope.notebooks.reduce(function(a, b) {
+				return a.noteCount + b.noteCount;
+			});
+		} else {
+			return 0;
+		}
+	}
+
+	// Magic notebook contains all notes
+	$scope.magicNotebook = NotebookService.magicNotebook;
 	$scope.notebooks = NotebookService.notebooks;
 }]);
 
 module.controller('NoteListController', ['$scope', '$modal', '$rootScope', 'NotebookService', 'NoteService', function($scope, $modal, $rootScope, NotebookService, NoteService) {
 
 	$scope.$on('notebooks.select', function(event, book) {
+		// Todo: initiative to load notes based on selected notebook should
+		// be in the notes controller
 		$scope.selectedNotebook = book;
 		NoteService.getList(book);
 	});
 
 	$scope.$on('notes.load', function(event, search) {
+		// Todo: It shouldn't be necesarry to reset this variable on the
+		// notes.load event, as Noteservice.notes should be a promise
 		$scope.notes = NoteService.notes;
 		$scope.search = search;
 		
