@@ -189,15 +189,12 @@ var notebookModalInstanceCtrl = function ($scope, $modalInstance, NotebookServic
 	};
 
 	$scope.update = function () {
-		console.log('1');
 		NotebookService.updateNotebook($scope.notebook, function() {
-			console.log('4');
 			$modalInstance.close();		
 		});
 	};
 
 	$scope.cancel = function () {
-		console.log($scope.notebook);
 		$modalInstance.dismiss('cancel');
 	};
 };
