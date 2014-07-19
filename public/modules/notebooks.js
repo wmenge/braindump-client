@@ -14,8 +14,8 @@ notebooksModule.service( 'NotebookService', [ '$rootScope', 'Notebooks', functio
 		magicNotebook: { title: 'All notes' },
 		selectedNotebook: null,
 		notebooks: [],
-		getList: function () {
-			service.notebooks = Notebooks.query(function() {
+		getList: function (sortPredicate) {
+			service.notebooks = Notebooks.query({ sort: sortPredicate }, function() {
 
 				if (service.selectedNotebook == null) {
 					service.selectNotebook(service.magicNotebook);

@@ -40,7 +40,7 @@ module.controller('NotebookListController', ['$scope', '$modal', '$rootScope', '
 	});
 
 	$scope.init = function() {
-		NotebookService.getList();
+		NotebookService.getList($scope.sortPredicate);
 	}
 
 	$scope.selectNotebook = function(book) {
@@ -56,7 +56,7 @@ module.controller('NotebookListController', ['$scope', '$modal', '$rootScope', '
 			templateUrl: 'newNotebookModal.html',
 			controller: notebookModalInstanceCtrl,
 			resolve: {
-				book: function() { return {}; }
+				book: function() { return { title: '' }; }
 			}
 		});
 	};
@@ -74,6 +74,7 @@ module.controller('NotebookListController', ['$scope', '$modal', '$rootScope', '
 	// Magic notebook contains all notes
 	$scope.magicNotebook = NotebookService.magicNotebook;
 	$scope.notebooks = NotebookService.notebooks;
+	$scope.sortPredicate = 'title';
 }]);
 
 module.controller('NoteListController', ['$scope', '$modal', '$rootScope', 'NotebookService', 'NoteService', function($scope, $modal, $rootScope, NotebookService, NoteService) {
@@ -183,16 +184,19 @@ module.controller('NoteDetailController', ['$scope', 'NotebookService', 'NoteSer
 // It is not the same as the $modal service used above.
 var notebookModalInstanceCtrl = function ($scope, $modalInstance, NotebookService, book) {
 
-	$scope.notebook = book;
+	$scope.originalNotebook = book;
+	$scope.notebook = { title: book.title };
 
 	$scope.create = function () {
-		NotebookService.addNotebook($scope.notebook, function() {
+		$scope.originalNotebook.title = $scope.notebook.title;
+		NotebookService.addNotebook($scope.originalNotebook, function() {
 			$modalInstance.close();		
 		});
 	};
 
 	$scope.update = function () {
-		NotebookService.updateNotebook($scope.notebook, function() {
+		$scope.originalNotebook.title = $scope.notebook.title;
+		NotebookService.updateNotebook($scope.originalNotebook, function() {
 			$modalInstance.close();		
 		});
 	};
