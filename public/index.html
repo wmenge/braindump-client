@@ -122,6 +122,12 @@
 								<span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu" role="menu">
+								<li><a ng-class="{selected: (sortPredicate=='title')}" href="#" ng-click="sortPredicate='title';">Sort by title (A to Z)</a></li>
+								<li><a ng-class="{selected: (sortPredicate=='-title')}" href="#" ng-click="sortPredicate='-title';">Sort by title (Z to A)</a></li>
+								<li><a ng-class="{selected: (sortPredicate=='modified')}" href="#" ng-click="sortPredicate='modified';">Sort by date (Old to New)</a></li>
+								<li><a ng-class="{selected: (sortPredicate=='-modified')}" href="#" ng-click="sortPredicate='-modified';">Sort by date (New to Old)</a></li>
+								
+								<li class="divider"></li>
 								<li ng-class="{disabled: (createButtonDisabled())}"><a href="#" ng-click="showRenameNotebookModal(selectedNotebook)">Rename notebook...</a></li>
 								<li ng-class="{disabled: (createButtonDisabled())}"><a href="#" ng-click="createNote()">Create new note</a></li>
 								<li class="divider"></li>
@@ -135,7 +141,7 @@
 
 			<div class="panel-body">
 				<div class="list-group">
-					<a class="noteListItem list-group-item" ng-repeat="note in notes" ng-click="selectNote(note)" ng-class="{active: (noteIsSelected(note))}">
+					<a class="noteListItem list-group-item" ng-repeat="note in notes | orderBy:sortPredicate" ng-click="selectNote(note)" ng-class="{active: (noteIsSelected(note))}">
 						<h5 class="list-group-item-heading">{{note.title}}</h5>
 						<p>{{note.updated*1000 | date:'medium'}}</p>
 					</a>

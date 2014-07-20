@@ -45,9 +45,9 @@
 	margin-top: -7px;
 }
 
-/*.panel-heading .pull-right .btn {
-	margin-top: -6px;
-}*/
+.dropdown-menu>li>a.selected {
+	font-weight: bolder;
+}
 
 .panel-heading input {
 	font-weight: 500;

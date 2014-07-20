@@ -18,11 +18,11 @@ notesModules.service( 'NoteService', [ '$rootScope', 'Notes', 'AllNotes', 'Noteb
 	var service = {
 		selectedNote: null,
 		notes: [],
-		getList: function(book, query) {
+		getList: function(book, query, sortPredicate) {
 
 			if (book == NotebookService.magicNotebook) {
 
-				service.notes = AllNotes.query({ q: query }, 
+				service.notes = AllNotes.query({ q: query, sort: sortPredicate }, 
 					function() {
 						$rootScope.$broadcast('notes.load', (query != null));
 					},
@@ -34,7 +34,7 @@ notesModules.service( 'NoteService', [ '$rootScope', 'Notes', 'AllNotes', 'Noteb
 
 			} else {
 
-				service.notes = Notes.query({notebookId: book.id, q: query }, 
+				service.notes = Notes.query({notebookId: book.id, sort: sortPredicate, q: query }, 
 					function() {
 						$rootScope.$broadcast('notes.load', (query != null));
 					},

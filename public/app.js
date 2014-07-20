@@ -132,6 +132,7 @@ module.controller('NoteListController', ['$scope', '$modal', '$rootScope', 'Note
 
 	$scope.search = false;
 
+	$scope.sortPredicate = 'title'
 }]);
 
 module.controller('NoteDetailController', ['$scope', 'NotebookService', 'NoteService', function($scope, NotebookService, NoteService) {
