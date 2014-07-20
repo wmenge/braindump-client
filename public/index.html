@@ -58,12 +58,12 @@
 					<h3 class="modal-title">Create notebook</h3>
 				</div>
 				<div class="modal-body">
-					<form name="notebookForm" id="notebookForm" novalidate>
+					<form name="createNotebookForm" id="createNotebookForm" novalidate>
 						<input type="text" class="form-control" placeholder="Title of new notebook" ng-model="notebook.title" required />
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button class="btn btn-primary" ng-click="create()" ng-disabled="notebookForm.$invalid || !notebookForm.$dirty">Create</button>
+					<button class="btn btn-primary" ng-click="create()" ng-disabled="createNotebookForm.$invalid || !createNotebookForm.$dirty">Create</button>
 					<button class="btn btn-default" ng-click="cancel()">Cancel</button>
 				</div>
 			</script>
@@ -103,12 +103,12 @@
 					<h3 class="modal-title">Change title</h3>
 				</div>
 				<div class="modal-body">
-					<form name="notebookForm" id="notebookForm" novalidate>
-						<input type="text" class="form-control" placeholder="Title of new notebook" ng-model="notebook.title" required />
+					<form name="updateNotebookForm" id="updateNotebookForm" novalidate>
+						<input type="text" class="form-control" placeholder="Title of notebook" ng-model="notebook.title" required />
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button class="btn btn-primary" ng-click="update()" ng-disabled="notebookForm.$invalid || !notebookForm.$dirty">Ok</button>
+					<button class="btn btn-primary" ng-click="update()" ng-disabled="updateNotebookForm.$invalid || !updateNotebookForm.$dirty">Ok</button>
 					<button class="btn btn-default" ng-click="cancel()">Cancel</button>
 				</div>
 			</script>
