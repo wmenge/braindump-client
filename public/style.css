@@ -41,13 +41,13 @@
 	overflow: visible;
 }
 
-.panel-heading .btn {
-	margin-top: -8px;
+.panel-heading button, .panel-heading select {
+	margin-top: -7px;
 }
 
-.panel-heading .pull-right .btn {
+/*.panel-heading .pull-right .btn {
 	margin-top: -6px;
-}
+}*/
 
 .panel-heading input {
 	font-weight: 500;
