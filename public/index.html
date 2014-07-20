@@ -178,19 +178,16 @@
 
 				<div class="panel-body">
 
-					<div class="form-group input-group">
-						<label for="notebook_id">Modified</label>
+					<div class="form-group input-group pull-right">
 						<p class="form-control-static">
-							{{note.updated*1000 | date:'medium'}}
+							<strong>Modified:</strong> {{note.updated*1000 | date:'medium'}}
 						</p>
 					</div>
 
 					<div class="form-group">
-						<label for="url">Url</label>
-						
 						<input id="url" class="form-control" type="text" placeholder="If relevant, add a link here" ng-model="note.url" />
 					</div>
-
+ 
 					<!-- check http://dev.evernote.com/doc/articles/enml.php for everote html format -->
 					<div class="text-angular" text-angular ta-toolbar-group-class="btn-group btn-group-sm" ng-model="note.content"></div>
 
