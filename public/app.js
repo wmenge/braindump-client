@@ -64,7 +64,11 @@ module.controller('NotebookListController', ['$scope', '$modal', '$rootScope', '
 	$scope.totalNoteCount = function() {
 		if ($scope.notebooks.length > 0) {
 			return $scope.notebooks.reduce(function(a, b) {
-				return a.noteCount + b.noteCount;
+				if (typeof a === 'number') {
+					return a + b.noteCount;
+				} else {
+					return a.noteCount + b.noteCount;	
+				}				
 			});
 		} else {
 			return 0;
