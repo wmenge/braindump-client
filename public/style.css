@@ -23,6 +23,12 @@
 	font-weight: normal;
 }
 
+#loading-bar-spinner {
+  top: 18px;
+  left: 135px;
+
+}
+
 .list-group-item {
 	border-left: 0;
 	border-right: 0;

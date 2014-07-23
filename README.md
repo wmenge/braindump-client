@@ -40,6 +40,7 @@ Implementation details
 * [Bootstrap](http://getbootstrap.com) UI Framework (Except Js part, as it is based on Jquery)
 * [Angular UI Bootstrap](http://angular-ui.github.io/bootstrap/) Provides glue between Angular and Bootstrap
 * [textAngular](http://textangular.com) Angular based RTF editor
+* [Angular Loading Bar](https://chieffancypants.github.io/angular-loading-bar/)
 
 ###Data Model
 
