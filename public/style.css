@@ -6,12 +6,13 @@
 .navbar-brand {
   height: 50px;
   font-size: 25px;
-  line-height: 14px;
+  line-height: 16px;
   letter-spacing: -1px;
 }
 
 .navbar form {
 	margin-left: 40px;
+	width: 280px;
 }
 
 .navbar-brand #brain {
