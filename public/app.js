@@ -1,4 +1,4 @@
-var module = angular.module('BrainDumpApp', ['angular-loading-bar', 'ngResource', 'ui.bootstrap', 'textAngular', 'braindump.notebooks', 'braindump.notes']);
+var module = angular.module('BrainDumpApp', ['angular-loading-bar', 'ngAnimate', 'ngResource', 'ui.bootstrap', 'textAngular', 'braindump.notebooks', 'braindump.notes']);
 
 module.controller('AppController', [ '$scope', 'NotebookService', 'NoteService', function($scope, NotebookService, NoteService) {
 
@@ -135,14 +135,20 @@ module.controller('NoteListController', ['$scope', '$modal', '$rootScope', 'Note
 	$scope.sortPredicate = 'title'
 }]);
 
-module.controller('NoteDetailController', ['$scope', 'NotebookService', 'NoteService', function($scope, NotebookService, NoteService) {
+module.controller('NoteDetailController', ['$scope', '$timeout', 'NotebookService', 'NoteService', function($scope, $timeout, NotebookService, NoteService) {
 
+	// Autosave: http://adamalbrecht.com/2013/10/30/auto-save-your-model-in-angular-js-with-watch-and-debounce/
+	var timeout = null;
+	var saveInProgress = false;
+	var delay = 2;
+	
 	$scope.$on('notebooks.load', function(event) {
 		$scope.notebooks = NotebookService.notebooks;
 	});
 
 	$scope.$on('notebooks.select', function(event, book) {
 		$scope.note = null;
+		$scope.saved = false;
 		$scope.noteForm.$setPristine();
 	});
 
@@ -152,32 +158,61 @@ module.controller('NoteDetailController', ['$scope', 'NotebookService', 'NoteSer
 			note.$get(function() {
 				$scope.note = note;
 				$scope.noteForm.$setPristine();
+				$scope.saved = false;
+		
 			});			
 		} else {
 			$scope.note = note;
 			$scope.noteForm.$setPristine();
+			$scope.saved = false;
 		}
 
 	});
 
 	$scope.$on('notes.created', function(event, note) {
 		$scope.note = note;
+		$scope.saved = false;
 	});
 
 	$scope.$on('notes.update', function(event) {
 		$scope.noteForm.$setPristine();
+		saveInProgress = false; // Todo should be using promises insead of these event hacks
+		// http://adamalbrecht.com/2013/10/30/auto-save-your-model-in-angular-js-with-watch-and-debounce/
+		$scope.saved = true;
+		$timeout(function() { $scope.saved = false; }, 1000 * delay);
 	});
-
-	$scope.saveNote = function(note) {
-		NoteService.saveNote(note);
-	}
 
 	$scope.deleteNote = function(note) {
 		NoteService.deleteNote(note);
 	};
 
+	
+	var saveUpdates = function() {
+		if (!saveInProgress && $scope.noteForm.$valid) {
+			saveInProgress = true;
+			NoteService.saveNote($scope.note)
+		}	
+	}
+
+	var debounceSaveUpdates = function(newVal, oldVal) {
+		if ((newVal != oldVal) && ($scope.noteForm.$dirty)) {
+			if (timeout) {
+				$timeout.cancel(timeout)
+			}
+			timeout = $timeout(saveUpdates, 1000 * delay);  // 1000 = 1 second
+		}
+	};
+
+	// Watch field changes to implement autosave
+	$scope.$watch('note.title', debounceSaveUpdates)
+	$scope.$watch('note.url', debounceSaveUpdates)
+	$scope.$watch('note.content', debounceSaveUpdates)
+
 	$scope.note = null;
 	$scope.notebooks = NotebookService.notebooks;
+
+	// flag is used to show/hide an animated saved indicator
+	$scope.saved = false;
 
 }]);
 

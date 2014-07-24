@@ -81,3 +81,25 @@
 .input-group-lg .form-control {
 	font-weight: bold;
 }
+
+/* Animations */
+/* TODO:
+	- bounceIn effect does not work, fadeIs shown instead
+	- only works correctly with ng-if / .ng-enter / .ng-leave,
+	  not with ng-show / .ng-show / .ng-hide
+
+*/
+#saved.ng-enter {
+    -webkit-animation: bounceIn 0.5s;
+    -moz-animation: bounceIn 0.5s;
+    -ms-animation: bounceIn 0.5;
+    animation: bounceIn 0.5;
+}
+
+#saved.ng-leave {
+    animation: fadeOut 1s;
+    -webkit-animation: fadeOut 1s;
+    -moz-animation: fadeOut 1s;
+    -ms-animation: fadeOut 1s;
+    animation: fadeOut 1s;
+}
