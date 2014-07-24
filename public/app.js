@@ -64,15 +64,10 @@ module.controller('NotebookListController', ['$scope', '$modal', '$rootScope', '
 	$scope.totalNoteCount = function() {
 		if ($scope.notebooks.length > 0) {
 			return $scope.notebooks.reduce(function(a, b) {
-				if (typeof a === 'number') {
-					return a + b.noteCount;
-				} else {
-					return a.noteCount + b.noteCount;	
-				}				
+				return ((typeof a === 'number') ? a : a.noteCount) + b.noteCount;				
 			});
-		} else {
-			return 0;
 		}
+		return 0;
 	}
 
 	// Magic notebook contains all notes
@@ -81,6 +76,7 @@ module.controller('NotebookListController', ['$scope', '$modal', '$rootScope', '
 	$scope.sortPredicate = 'title';
 }]);
 
+// todo: split into notebookdetailcontroller and notelistcontroller
 module.controller('NoteListController', ['$scope', '$modal', '$rootScope', 'NotebookService', 'NoteService', function($scope, $modal, $rootScope, NotebookService, NoteService) {
 
 	$scope.$on('notebooks.select', function(event, book) {

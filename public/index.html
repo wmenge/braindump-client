@@ -117,7 +117,7 @@
 			</script>
 
 			<div class="panel-heading">
-				<h3 class="panel-title">{{selectedNotebook.title}} <span ng-if="search">(filtered)</span>
+				<h3 class="panel-title">{{selectedNotebook.title}} <span ng-show="search">(filtered)</span>
 
 					<div class="pull-right">
 						<div class="btn-group" dropdown>
@@ -150,12 +150,12 @@
 					</a>
 
 				</div>
-				<div ng-if="notes.length == 0">
-					<p class="text-center" style="padding: 15px;" ng-if="!search">
+				<div ng-show="notes.length == 0">
+					<p class="text-center" style="padding: 15px;" ng-show="!search">
 						<small><strong>No notes</strong> in this notebook. You can create a <a href="#"  ng-click="createNote()">new note</a>.</small>
 					</p>
 
-					<p class="text-center" style="padding: 15px;" ng-if="search">
+					<p class="text-center" style="padding: 15px;" ng-show="search">
 						<small><strong>No search result</strong> found. Try again with a different terms or try searching in a different notebook.
 					</p>
 
