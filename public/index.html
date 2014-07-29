@@ -188,7 +188,8 @@
 						<p class="form-control-static">
 							<strong>Modified:</strong> {{note.updated*1000 | date:'medium'}}
 
-							&nbsp;<span id="saved" ng-if="saved" class="text-success"><span class="glyphicon glyphicon glyphicon-ok"></span> saved</span>
+							&nbsp;<span id="saved" ng-if="saved" class="text-success"><span class="glyphicon glyphicon glyphicon-ok"></span> Saved</span>
+							<span id="save_error" ng-if="save_error" class="text-danger"><span class="glyphicon glyphicon glyphicon-exclamation-sign"></span> Error while saving</span>
 						</p>
 					</div>
 

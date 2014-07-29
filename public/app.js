@@ -141,6 +141,7 @@ module.controller('NoteDetailController', ['$scope', '$timeout', 'NotebookServic
 	var timeout = null;
 	var saveInProgress = false;
 	var delay = 2;
+	var errorDelay = 5;
 	
 	$scope.$on('notebooks.load', function(event) {
 		$scope.notebooks = NotebookService.notebooks;
@@ -159,27 +160,36 @@ module.controller('NoteDetailController', ['$scope', '$timeout', 'NotebookServic
 				$scope.note = note;
 				$scope.noteForm.$setPristine();
 				$scope.saved = false;
-		
-			});			
+				$scope.save_error = false;
+			});
 		} else {
 			$scope.note = note;
 			$scope.noteForm.$setPristine();
 			$scope.saved = false;
+			$scope.save_error = false;
 		}
-
 	});
 
 	$scope.$on('notes.created', function(event, note) {
 		$scope.note = note;
 		$scope.saved = false;
+		$scope.save_error = false;
 	});
 
-	$scope.$on('notes.update', function(event) {
+	$scope.$on('notes.update.success', function(event) {
 		$scope.noteForm.$setPristine();
 		saveInProgress = false; // Todo should be using promises insead of these event hacks
 		// http://adamalbrecht.com/2013/10/30/auto-save-your-model-in-angular-js-with-watch-and-debounce/
 		$scope.saved = true;
 		$timeout(function() { $scope.saved = false; }, 1000 * delay);
+	});
+
+	$scope.$on('notes.update.error', function(event) {
+		//$scope.noteForm.$setPristine();
+		saveInProgress = false; // Todo should be using promises insead of these event hacks
+		// http://adamalbrecht.com/2013/10/30/auto-save-your-model-in-angular-js-with-watch-and-debounce/
+		$scope.save_error = true;
+		$timeout(function() { $scope.save_error = false; }, 1000 * errorDelay);
 	});
 
 	$scope.deleteNote = function(note) {

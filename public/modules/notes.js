@@ -60,14 +60,22 @@ notesModules.service( 'NoteService', [ '$rootScope', 'Notes', 'AllNotes', 'Noteb
 			$rootScope.$broadcast('notes.created', newNote);
 		},
 		saveNote: function(note) {
-			if (note.id == null) {
-				note.$save(function() {
-					$rootScope.$broadcast('notes.update');
-				});
+			if (note.id === null) {
+				note.$save(
+					function() {
+						$rootScope.$broadcast('notes.update.success');
+					},
+					function() {
+						$rootScope.$broadcast('notes.update.error');
+					});
 			} else {
-				note.$update(function() {
-					$rootScope.$broadcast('notes.update');
-				});
+				note.$update(
+					function() {
+						$rootScope.$broadcast('notes.update.success');
+					},
+					function() {
+						$rootScope.$broadcast('notes.update.error');
+					});
 			}
 		},
 		deleteNote: function(note) {
