@@ -2,7 +2,7 @@ var notesModules = angular.module('braindump.notes', ['ngResource', 'braindump.n
 
 notesModules.factory('Notes', ['$resource', function($resource) {
 	return $resource(
-		'http://braindump-api.local/notebooks/:notebookId/notes/:noteId', 
+		'http://braindump-api.local/notebooks/:notebookId/notes/:noteId',
 		{ notebookId: '@notebook_id', noteId: '@id' },
 		{ update: { method: 'PUT' }});
 }]);
@@ -22,24 +22,24 @@ notesModules.service( 'NoteService', [ '$rootScope', 'Notes', 'AllNotes', 'Noteb
 
 			if (book == NotebookService.magicNotebook) {
 
-				service.notes = AllNotes.query({ q: query, sort: sortPredicate }, 
+				service.notes = AllNotes.query({ q: query, sort: sortPredicate },
 					function() {
-						$rootScope.$broadcast('notes.load', (query != null));
+						$rootScope.$broadcast('notes.load', (query !== null));
 					},
 					function() {
-						$rootScope.$broadcast('notes.load', (query != null));
+						$rootScope.$broadcast('notes.load', (query !== null));
 						// Todo: show some error message
 						service.notes = [];
 					});
 
 			} else {
 
-				service.notes = Notes.query({notebookId: book.id, sort: sortPredicate, q: query }, 
+				service.notes = Notes.query({notebookId: book.id, sort: sortPredicate, q: query },
 					function() {
-						$rootScope.$broadcast('notes.load', (query != null));
+						$rootScope.$broadcast('notes.load', (query !== null));
 					},
 					function() {
-						$rootScope.$broadcast('notes.load', (query != null));
+						$rootScope.$broadcast('notes.load', (query !== null));
 						// Todo: show some error message
 						service.notes = [];
 					});
@@ -47,12 +47,12 @@ notesModules.service( 'NoteService', [ '$rootScope', 'Notes', 'AllNotes', 'Noteb
 			}
 		},
 		createNote: function(book) {
-			newNote = new Notes({ 
-				notebook_id: book.id, 
-				url: "", 
-				type: "HTML", 
-				content: "", 
-				created: Date.now()/1000, 
+			newNote = new Notes({
+				notebook_id: book.id,
+				url: "",
+				type: "HTML",
+				content: "",
+				created: Date.now()/1000,
 				updated: Date.now()/1000 });
 			service.notes.push(newNote);
 			book.noteCount++;
@@ -79,18 +79,20 @@ notesModules.service( 'NoteService', [ '$rootScope', 'Notes', 'AllNotes', 'Noteb
 			}
 		},
 		deleteNote: function(note) {
-			if (note.id == null) {
+			if (note.id === null)
+			{
 				$rootScope.$broadcast('notes.delete', note);
 			} else {
 				note.$delete(function() {
 					$rootScope.$broadcast('notes.delete', note);
 				});
-			}	
+			}
 		},
 		selectNote: function(note) {
 			service.selectedNote = note;
 			$rootScope.$broadcast('notes.select', note);
 		}
-	} 
-   return service;
+	};
+
+	return service;
 }]);

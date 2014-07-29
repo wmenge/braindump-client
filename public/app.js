@@ -3,20 +3,20 @@ var module = angular.module('BrainDumpApp', ['angular-loading-bar', 'ngAnimate',
 module.controller('AppController', [ '$scope', 'NotebookService', 'NoteService', function($scope, NotebookService, NoteService) {
 
 	$scope.search = function() {
-		if (NotebookService.selectedNotebook != null) {
+		if (NotebookService.selectedNotebook !== null) {
 			NoteService.getList(NotebookService.selectedNotebook, $scope.query);
 		}
-	}
+	};
 
 	$scope.createNote = function() {
-		if (NotebookService.selectedNotebook != null) {
+		if (NotebookService.selectedNotebook !== null) {
 			NoteService.createNote(NotebookService.selectedNotebook);
 		}
-	}
+	};
 
 	$scope.createButtonDisabled = function() {
 		return (NotebookService.magicNotebook == NotebookService.selectedNotebook);
-	}
+	};
 
 	$scope.$on('notebooks.select', function(event, book) {
 		$scope.query = '';
@@ -41,15 +41,15 @@ module.controller('NotebookListController', ['$scope', '$modal', '$rootScope', '
 
 	$scope.init = function() {
 		NotebookService.getList($scope.sortPredicate);
-	}
+	};
 
 	$scope.selectNotebook = function(book) {
 		NotebookService.selectNotebook(book);
-	}
+	};
 
 	$scope.noteBookIsSelected = function(book) {
 		return book == NotebookService.selectedNotebook;
-	}
+	};
 
 	$scope.showNewNotebookModal = function() {
 		$modal.open({
@@ -64,11 +64,11 @@ module.controller('NotebookListController', ['$scope', '$modal', '$rootScope', '
 	$scope.totalNoteCount = function() {
 		if ($scope.notebooks.length > 0) {
 			return $scope.notebooks.reduce(function(a, b) {
-				return ((typeof a === 'number') ? a : a.noteCount) + b.noteCount;				
+				return ((typeof a === 'number') ? a : a.noteCount) + b.noteCount;
 			});
 		}
 		return 0;
-	}
+	};
 
 	// Magic notebook contains all notes
 	$scope.magicNotebook = NotebookService.magicNotebook;
@@ -107,7 +107,7 @@ module.controller('NoteListController', ['$scope', '$modal', '$rootScope', 'Note
 
 	$scope.selectNote = function(note) {
 		NoteService.selectNote(note);
-	}
+	};
 
 	$scope.showRenameNotebookModal = function(book) {
 		$modal.open({
@@ -121,18 +121,18 @@ module.controller('NoteListController', ['$scope', '$modal', '$rootScope', 'Note
 
 	$scope.deleteNotebook = function(notebook) {
 		NotebookService.deleteNotebook(notebook);
-	}
+	};
 
 	$scope.noteIsSelected = function(note) {
 		return note == NoteService.selectedNote;
-	}
+	};
 
 	$scope.selectedNotebook = null;
 	$scope.notes = NoteService.notes;
 
 	$scope.search = false;
 
-	$scope.sortPredicate = 'title'
+	$scope.sortPredicate = 'title';
 }]);
 
 module.controller('NoteDetailController', ['$scope', '$timeout', 'NotebookService', 'NoteService', function($scope, $timeout, NotebookService, NoteService) {
@@ -196,33 +196,33 @@ module.controller('NoteDetailController', ['$scope', '$timeout', 'NotebookServic
 		NoteService.deleteNote(note);
 	};
 
-	
 	var saveUpdates = function() {
 		if (!saveInProgress && $scope.noteForm.$valid) {
 			saveInProgress = true;
-			NoteService.saveNote($scope.note)
-		}	
-	}
+			NoteService.saveNote($scope.note);
+		}
+	};
 
 	var debounceSaveUpdates = function(newVal, oldVal) {
 		if ((newVal != oldVal) && ($scope.noteForm.$dirty)) {
 			if (timeout) {
-				$timeout.cancel(timeout)
+				$timeout.cancel(timeout);
 			}
 			timeout = $timeout(saveUpdates, 1000 * delay);  // 1000 = 1 second
 		}
 	};
 
 	// Watch field changes to implement autosave
-	$scope.$watch('note.title', debounceSaveUpdates)
-	$scope.$watch('note.url', debounceSaveUpdates)
-	$scope.$watch('note.content', debounceSaveUpdates)
+	$scope.$watch('note.title', debounceSaveUpdates);
+	$scope.$watch('note.url', debounceSaveUpdates);
+	$scope.$watch('note.content', debounceSaveUpdates);
 
 	$scope.note = null;
 	$scope.notebooks = NotebookService.notebooks;
 
 	// flag is used to show/hide an animated saved indicator
 	$scope.saved = false;
+	$scope.save_error = false;
 
 }]);
 
@@ -236,14 +236,14 @@ var notebookModalInstanceCtrl = function ($scope, $modalInstance, NotebookServic
 	$scope.create = function () {
 		$scope.originalNotebook.title = $scope.notebook.title;
 		NotebookService.addNotebook($scope.originalNotebook, function() {
-			$modalInstance.close();		
+			$modalInstance.close();
 		});
 	};
 
 	$scope.update = function () {
 		$scope.originalNotebook.title = $scope.notebook.title;
 		NotebookService.updateNotebook($scope.originalNotebook, function() {
-			$modalInstance.close();		
+			$modalInstance.close();
 		});
 	};
 

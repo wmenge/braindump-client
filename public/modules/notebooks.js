@@ -2,7 +2,7 @@ var notebooksModule = angular.module('braindump.notebooks', ['ngResource']);
 
 notebooksModule.factory('Notebooks', ['$resource', function($resource) {
 	return $resource(
-		'http://braindump-api.local/notebooks/:id', 
+		'http://braindump-api.local/notebooks/:id',
 		{ id: '@id' },
 		{ update: { method: 'PUT' } });
 }]);
@@ -17,13 +17,13 @@ notebooksModule.service( 'NotebookService', [ '$rootScope', 'Notebooks', functio
 		getList: function (sortPredicate) {
 			service.notebooks = Notebooks.query({ sort: sortPredicate }, function() {
 
-				if (service.selectedNotebook == null) {
+				if (service.selectedNotebook === null) {
 					service.selectNotebook(service.magicNotebook);
 				}
 
 				$rootScope.$broadcast('notebooks.load');
 	
-			});		
+			});
 		},
 		addNotebook: function(book, success) {
 			Notebooks.save(book, function(newBook) {
@@ -52,6 +52,8 @@ notebooksModule.service( 'NotebookService', [ '$rootScope', 'Notebooks', functio
 			service.selectedNotebook = book;
 			$rootScope.$broadcast('notebooks.select', book);
 		}
-	} 
+	};
+
    return service;
+   
 }]);
