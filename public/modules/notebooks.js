@@ -2,7 +2,7 @@ var notebooksModule = angular.module('braindump.notebooks', ['ngResource']);
 
 notebooksModule.factory('Notebooks', ['$resource', function($resource) {
 	return $resource(
-		'http://braindump-api.local/notebooks/:id',
+		'http://braindump-api.local/api/notebooks/:id',
 		{ id: '@id' },
 		{ update: { method: 'PUT' } });
 }]);

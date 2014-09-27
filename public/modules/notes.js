@@ -2,13 +2,13 @@ var notesModules = angular.module('braindump.notes', ['ngResource', 'braindump.n
 
 notesModules.factory('Notes', ['$resource', function($resource) {
 	return $resource(
-		'http://braindump-api.local/notebooks/:notebookId/notes/:noteId',
+		'http://braindump-api.local/api/notebooks/:notebookId/notes/:noteId',
 		{ notebookId: '@notebook_id', noteId: '@id' },
 		{ update: { method: 'PUT' }});
 }]);
 
 notesModules.factory('AllNotes', ['$resource', function($resource) {
-	return $resource('http://braindump-api.local/notes/:noteId',
+	return $resource('http://braindump-api.local/api/notes/:noteId',
 		{ noteId: '@id' },
 		{ update: { method: 'PUT' }});
 }]);
@@ -60,7 +60,9 @@ notesModules.service( 'NoteService', [ '$rootScope', 'Notes', 'AllNotes', 'Noteb
 			$rootScope.$broadcast('notes.created', newNote);
 		},
 		saveNote: function(note) {
-			if (note.id === null) {
+			// todo: check difference between == and ===
+			// sublime wants to use ===, but this does not have desired effect
+			if (note.id == null) {
 				note.$save(
 					function() {
 						$rootScope.$broadcast('notes.update.success');
