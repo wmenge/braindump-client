@@ -1,5 +1,9 @@
 var module = angular.module('BrainDumpApp', ['angular-loading-bar', 'ngAnimate', 'ngResource', 'ui.bootstrap', 'textAngular', 'braindump.notebooks', 'braindump.notes']);
 
+module.run(function($http) {
+	$http.defaults.headers.common.Authorization = 'Basic ' + btoa('wilcomenge@gmail.com:welcome');
+});
+
 module.controller('AppController', [ '$scope', 'NotebookService', 'NoteService', function($scope, NotebookService, NoteService) {
 
 	$scope.search = function() {
