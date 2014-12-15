@@ -1,7 +1,7 @@
 var module = angular.module('BrainDumpApp', ['angular-loading-bar', 'ngAnimate', 'ngResource', 'ui.bootstrap', 'textAngular', 'braindump.notebooks', 'braindump.notes']);
 
 module.run(function($http) {
-	$http.defaults.headers.common.Authorization = 'Basic ' + btoa('wilcomenge@gmail.com:welcome');
+	$http.defaults.withCredentials = true; // allows sending of auth cookie in CORS scenario
 });
 
 module.controller('AppController', [ '$scope', 'NotebookService', 'NoteService', function($scope, NotebookService, NoteService) {
