@@ -1,4 +1,4 @@
-var module = angular.module('BrainDumpApp', ['angular-loading-bar', 'ngAnimate', 'ngResource', 'ui.bootstrap', 'textAngular', 'braindump.notebooks', 'braindump.notes']);
+var module = angular.module('BrainDumpApp', ['ngRoute', 'angular-loading-bar', 'ngAnimate', 'ngResource', 'ui.bootstrap', 'textAngular', 'braindump.notebooks', 'braindump.notes']);
 
 module.run(function($http) {
 	$http.defaults.withCredentials = true; // allows sending of auth cookie in CORS scenario
