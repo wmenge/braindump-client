@@ -1,14 +1,14 @@
 var notesModules = angular.module('braindump.notes', ['ngResource', 'braindump.notebooks']);
 
-notesModules.factory('Notes', ['$resource', function($resource) {
+notesModules.factory('Notes', ['$resource', 'API_URL', function($resource, API_URL) {
 	return $resource(
-		'http://braindump-api.local/api/notebooks/:notebookId/notes/:noteId',
+		API_URL + '/api/notebooks/:notebookId/notes/:noteId',
 		{ notebookId: '@notebook_id', noteId: '@id' },
 		{ update: { method: 'PUT' }});
 }]);
 
-notesModules.factory('AllNotes', ['$resource', function($resource) {
-	return $resource('http://braindump-api.local/api/notes/:noteId',
+notesModules.factory('AllNotes', ['$resource', 'API_URL', function($resource, API_URL) {
+	return $resource(API_URL + '/api/notes/:noteId',
 		{ noteId: '@id' },
 		{ update: { method: 'PUT' }});
 }]);
