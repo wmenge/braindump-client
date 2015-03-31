@@ -1,4 +1,4 @@
-var module = angular.module('BrainDumpApp', ['ngRoute', 'angular-loading-bar', 'ngAnimate', 'ngResource', 'ui.bootstrap', 'textAngular', 'braindump.notebooks', 'braindump.notes']);
+var module = angular.module('BrainDumpApp', ['ngRoute', 'angular-loading-bar', 'ngAnimate', 'ngResource', 'ui.bootstrap', 'textAngular', 'braindump.notebooks', 'braindump.notes', 'braindump.user-configuration']);
 
 module.run(function($http) {
 	$http.defaults.withCredentials = true; // allows sending of auth cookie in CORS scenario
@@ -254,4 +254,44 @@ var notebookModalInstanceCtrl = function ($scope, $modalInstance, NotebookServic
 	$scope.cancel = function () {
 		$modalInstance.dismiss('cancel');
 	};
+
+};
+
+module.controller('UserConfigurationController', ['$scope', '$modal', 'UserConfigurationService', 'NotebookService', function($scope, $modal, UserConfigurationService, NotebookService) {
+
+	$scope.showUserConfigurationModal = function(configuration) {
+
+		UserConfigurationService.getConfiguration(function () {
+
+			$scope.configuration = UserConfigurationService.configuration;
+
+			$modal.open({
+				templateUrl: 'userConfigurationModal.html',
+				controller: userConfigurationModalInstanceCtrl,
+				resolve: {
+					configuration: function() { return $scope.configuration; }
+				}
+			});
+
+		});
+	};
+
+	$scope.configuration = null;
+}]);
+
+var userConfigurationModalInstanceCtrl = function ($scope, $modalInstance, UserConfigurationService, NotebookService, configuration) {
+
+	$scope.save = function () {
+		UserConfigurationService.updateConfiguration($scope.configuration, function() {
+			$modalInstance.close();
+		});
+	};
+
+	$scope.cancel = function () {
+		$modalInstance.dismiss('cancel');
+	};
+
+	$scope.notebooks = NotebookService.notebooks;
+	$scope.configuration = configuration;
+	
 };

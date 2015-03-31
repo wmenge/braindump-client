@@ -16,6 +16,7 @@
 	<script type="text/javascript" src='libs/angular-loading-bar/build/loading-bar.min.js'></script>
 	<script src="modules/notebooks.js"></script>
 	<script src="modules/notes.js"></script>
+	<script src="modules/user-configuration.js"></script>
 	<script src="app.js"></script>
 	<script src="config.js"></script>
 	<link rel='stylesheet prefetch' href='libs/bootstrap-css-only/css/bootstrap.min.css'>
@@ -51,7 +52,33 @@
 	
 		<button type="button" class="btn btn-default navbar-btn navbar-right" ng-disabled="createButtonDisabled()" ng-click="createNote()">
 			<span class="glyphicon glyphicon-plus"></span> Create note
-		</button>			
+		</button>	
+
+		<div id="userConfiguration" ng-controller="UserConfigurationController" ng-init="init()">
+
+			<button type="button" class="btn btn-default navbar-btn navbar-right" ng-click="showUserConfigurationModal()">
+				<span class="glyphicon glyphicon-cog">{{configuration.test}}</span>
+			</button>	
+
+			<!-- Modal dialog to modify User Configuration -->
+			<script type="text/ng-template" id="userConfigurationModal.html">
+				<div class="modal-header">
+					<h3 class="modal-title">User settings</h3>
+				</div>
+				<div class="modal-body">
+					<form name="userConfigurationForm" id="userConfigurationForm" novalidate>
+						<label for="email_to_notebook">Store emails from me to:</label>
+						<select class="form-control input-sm" name="email_to_notebook" id="email_to_notebook" ng-model="configuration.email_to_notebook" ng-options="book.id as book.title for book in notebooks"></select>	
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-primary" ng-click="save()" ng-disabled="userConfigurationForm.$invalid || !userConfigurationForm.$dirty">Save</button>
+					<button class="btn btn-default" ng-click="cancel()">Cancel</button>
+				</div>
+			</script>
+
+		</div>
+
 	</div>
 
 	<div id="app">
