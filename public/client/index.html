@@ -196,7 +196,7 @@
 			</div>
 		</div>
 
-		<form name="noteForm" id="noteForm" novalidate role="form" ng-controller="NoteDetailController" ng-hide="note == null">
+		<form name="noteForm" id="noteForm" novalidate role="form" ng-controller="NoteDetailController" ng-show="note && note.notebook_id">
 
 			<div id="note" class="panel panel-default">
 
