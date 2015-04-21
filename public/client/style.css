@@ -4,15 +4,19 @@
 }
 
 .navbar-brand {
+  width: 200px;
   height: 50px;
   font-size: 25px;
   line-height: 16px;
   letter-spacing: -1px;
 }
 
-.navbar form {
-	margin-left: 40px;
-	width: 280px;
+.navbar-form {
+    padding-left: 0;
+}
+
+.navbar-form .input-group {
+	width: 260px;
 }
 
 .navbar-brand #brain {
