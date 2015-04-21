@@ -24,10 +24,10 @@ notesModules.service( 'NoteService', [ '$rootScope', 'Notes', 'AllNotes', 'Noteb
 
 				service.notes = AllNotes.query({ q: query, sort: sortPredicate },
 					function() {
-						$rootScope.$broadcast('notes.load', (query !== null));
+						$rootScope.$broadcast('notes.load', Boolean(query));
 					},
 					function() {
-						$rootScope.$broadcast('notes.load', (query !== null));
+						$rootScope.$broadcast('notes.load', Boolean(query));
 						// Todo: show some error message
 						service.notes = [];
 					});
@@ -36,10 +36,10 @@ notesModules.service( 'NoteService', [ '$rootScope', 'Notes', 'AllNotes', 'Noteb
 
 				service.notes = Notes.query({notebookId: book.id, sort: sortPredicate, q: query },
 					function() {
-						$rootScope.$broadcast('notes.load', (query !== null));
+						$rootScope.$broadcast('notes.load', Boolean(query));
 					},
 					function() {
-						$rootScope.$broadcast('notes.load', (query !== null));
+						$rootScope.$broadcast('notes.load', Boolean(query));
 						// Todo: show some error message
 						service.notes = [];
 					});
