@@ -91,8 +91,15 @@ notesModules.service( 'NoteService', [ '$rootScope', 'Notes', 'AllNotes', 'Noteb
 			}
 		},
 		selectNote: function(note) {
-			service.selectedNote = note;
-			$rootScope.$broadcast('notes.select', note);
+			if (note.id) {
+				Notes.get({ notebookId: note.notebook_id, noteId: note.id }, function(serverNote) {
+					service.selectedNote = serverNote;
+					$rootScope.$broadcast('notes.select', serverNote);
+				});
+			} else {
+				service.selectedNote = note;
+				$rootScope.$broadcast('notes.select', note);
+			}
 		}
 	};
 

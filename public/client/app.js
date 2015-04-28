@@ -158,20 +158,10 @@ module.controller('NoteDetailController', ['$scope', '$timeout', 'NotebookServic
 	});
 
 	$scope.$on('notes.select', function(event, note) {
-
-		if (note.id) {
-			note.$get(function() {
-				$scope.note = note;
-				$scope.noteForm.$setPristine();
-				$scope.saved = false;
-				$scope.save_error = false;
-			});
-		} else {
-			$scope.note = note;
-			$scope.noteForm.$setPristine();
-			$scope.saved = false;
-			$scope.save_error = false;
-		}
+		$scope.note = note;
+		$scope.noteForm.$setPristine();
+		$scope.saved = false;
+		$scope.save_error = false;
 	});
 
 	$scope.$on('notes.created', function(event, note) {
@@ -201,7 +191,7 @@ module.controller('NoteDetailController', ['$scope', '$timeout', 'NotebookServic
 	};
 
 	var saveUpdates = function() {
-		if (!saveInProgress && $scope.noteForm.$valid) {
+		if (!saveInProgress && $scope.noteForm.$dirty && $scope.noteForm.$valid) {
 			saveInProgress = true;
 			NoteService.saveNote($scope.note);
 		}
