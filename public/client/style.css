@@ -13,10 +13,11 @@
 
 .navbar-form {
     padding-left: 0;
+    padding-right: 0;
 }
 
 .navbar-form .input-group {
-	width: 260px;
+	width: 255px;
 }
 
 .navbar-brand #brain {
@@ -32,10 +33,6 @@
   top: 18px;
   left: 135px;
 
-}
-
-#userConfiguration {
-    padding-right: 4px;
 }
 
 .list-group-item {
