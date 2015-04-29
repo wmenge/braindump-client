@@ -66,12 +66,9 @@ module.controller('NotebookListController', ['$scope', '$modal', '$rootScope', '
 	};
 
 	$scope.totalNoteCount = function() {
-		if ($scope.notebooks.length > 0) {
-			return $scope.notebooks.reduce(function(a, b) {
-				return ((typeof a === 'number') ? a : a.noteCount) + b.noteCount;
-			});
-		}
-		return 0;
+		return $scope.notebooks.reduce(function(a, b) {
+			return a + b.noteCount;
+		}, 0);
 	};
 
 	// Magic notebook contains all notes
