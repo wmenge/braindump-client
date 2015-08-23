@@ -226,7 +226,16 @@
 					</div>
 
 					<div class="form-group">
-						<input id="url" class="form-control" type="text" placeholder="If relevant, add a link here" ng-model="note.url" />
+
+						<div class="input-group">
+							<input id="url" class="form-control" type="text" placeholder="If relevant, add a link here" ng-model="note.url" />
+							<span class="input-group-btn">
+								<button type="button" class="btn btn-default" type="button" onClick="window.open(url.value,'_blank');" ng-disabled="note.url == ''">
+									<span class="glyphicon glyphicon-new-window"></span>
+								</button>
+							</span>
+						</div>
+
 					</div>
  
 					<!-- check http://dev.evernote.com/doc/articles/enml.php for everote html format -->
