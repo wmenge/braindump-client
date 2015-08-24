@@ -140,7 +140,6 @@ module.controller('NoteDetailController', ['$scope', '$timeout', 'NotebookServic
 
 	// Autosave: http://adamalbrecht.com/2013/10/30/auto-save-your-model-in-angular-js-with-watch-and-debounce/
 	var timeout = null;
-	var saveInProgress = false;
 	var delay = 2;
 	var errorDelay = 5;
 	
@@ -169,15 +168,12 @@ module.controller('NoteDetailController', ['$scope', '$timeout', 'NotebookServic
 
 	$scope.$on('notes.update.success', function(event) {
 		$scope.noteForm.$setPristine();
-		saveInProgress = false; // Todo should be using promises insead of these event hacks
-		// http://adamalbrecht.com/2013/10/30/auto-save-your-model-in-angular-js-with-watch-and-debounce/
 		$scope.saved = true;
 		$timeout(function() { $scope.saved = false; }, 1000 * delay);
 	});
 
 	$scope.$on('notes.update.error', function(event) {
-		//$scope.noteForm.$setPristine();
-		saveInProgress = false; // Todo should be using promises insead of these event hacks
+		//saveInProgress = false; // Todo should be using promises insead of these event hacks
 		// http://adamalbrecht.com/2013/10/30/auto-save-your-model-in-angular-js-with-watch-and-debounce/
 		$scope.save_error = true;
 		$timeout(function() { $scope.save_error = false; }, 1000 * errorDelay);
@@ -187,26 +183,26 @@ module.controller('NoteDetailController', ['$scope', '$timeout', 'NotebookServic
 		NoteService.deleteNote(note);
 	};
 
-	var saveUpdates = function() {
-		if (!saveInProgress && $scope.noteForm.$dirty && $scope.noteForm.$valid) {
+	var save = function() {
+		if ($scope.noteForm.$dirty && $scope.noteForm.$valid) {
 			saveInProgress = true;
 			NoteService.saveNote($scope.note);
 		}
 	};
 
-	var debounceSaveUpdates = function(newVal, oldVal) {
-		if ((newVal != oldVal) && ($scope.noteForm.$dirty)) {
+	var debounceSave = function(newVal, oldVal) {
+		if ($scope.noteForm.$dirty) {
 			if (timeout) {
 				$timeout.cancel(timeout);
 			}
-			timeout = $timeout(saveUpdates, 1000 * delay);  // 1000 = 1 second
+			timeout = $timeout(save, 1000 * delay);  // 1000 = 1 second
 		}
 	};
 
 	// Watch field changes to implement autosave
-	$scope.$watch('note.title', debounceSaveUpdates);
-	$scope.$watch('note.url', debounceSaveUpdates);
-	$scope.$watch('note.content', debounceSaveUpdates);
+	$scope.$watch('note.title', debounceSave);
+	$scope.$watch('note.url', debounceSave);
+	$scope.$watch('note.content', debounceSave);
 
 	$scope.note = null;
 	$scope.notebooks = NotebookService.notebooks;
