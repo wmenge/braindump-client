@@ -143,18 +143,16 @@ module.controller('NoteDetailController', ['$scope', '$timeout', 'NotebookServic
 	var delay = 2;
 	var errorDelay = 5;
 	
-	$scope.$on('notebooks.load', function(event) {
-		$scope.notebooks = NotebookService.notebooks;
-	});
-
 	$scope.$on('notebooks.select', function(event, book) {
 		$scope.note = null;
+		$scope.form = { title: '', url: '', content: '', notebook_id: 0 };
 		$scope.saved = false;
 		$scope.noteForm.$setPristine();
 	});
 
 	$scope.$on('notes.select', function(event, note) {
 		$scope.note = note;
+		$scope.form = { title: note.title, url: note.url, content: note.content, notebook_id: note.notebook_id };
 		$scope.noteForm.$setPristine();
 		$scope.saved = false;
 		$scope.save_error = false;
@@ -162,18 +160,20 @@ module.controller('NoteDetailController', ['$scope', '$timeout', 'NotebookServic
 
 	$scope.$on('notes.created', function(event, note) {
 		$scope.note = note;
+		$scope.form = { title: note.title, url: note.url, content: note.content, notebook_id: note.notebook_id };
 		$scope.saved = false;
 		$scope.save_error = false;
 	});
 
 	$scope.$on('notes.update.success', function(event) {
-		$scope.noteForm.$setPristine();
+		if (!$scope.noteForm.$dirty) {
+			$scope.form = { title: note.title, url: note.url, content: note.content, notebook_id: note.notebook_id };
+		}
 		$scope.saved = true;
 		$timeout(function() { $scope.saved = false; }, 1000 * delay);
 	});
 
 	$scope.$on('notes.update.error', function(event) {
-		//saveInProgress = false; // Todo should be using promises insead of these event hacks
 		// http://adamalbrecht.com/2013/10/30/auto-save-your-model-in-angular-js-with-watch-and-debounce/
 		$scope.save_error = true;
 		$timeout(function() { $scope.save_error = false; }, 1000 * errorDelay);
@@ -181,11 +181,16 @@ module.controller('NoteDetailController', ['$scope', '$timeout', 'NotebookServic
 
 	$scope.deleteNote = function(note) {
 		NoteService.deleteNote(note);
+		$scope.form = { title: '', url: '', content: '' };
 	};
 
 	var save = function() {
-		if ($scope.noteForm.$dirty && $scope.noteForm.$valid) {
+		if ($scope.noteForm.$valid) {
 			saveInProgress = true;
+			$scope.note.title = $scope.form.title;
+			$scope.note.url = $scope.form.url;
+			$scope.note.content = $scope.form.content;
+			$scope.note.notebook_id = $scope.form.notebook_id;
 			NoteService.saveNote($scope.note);
 		}
 	};
@@ -194,17 +199,22 @@ module.controller('NoteDetailController', ['$scope', '$timeout', 'NotebookServic
 		if ($scope.noteForm.$dirty) {
 			if (timeout) {
 				$timeout.cancel(timeout);
+				timeout = null;
 			}
 			timeout = $timeout(save, 1000 * delay);  // 1000 = 1 second
 		}
 	};
 
 	// Watch field changes to implement autosave
-	$scope.$watch('note.title', debounceSave);
-	$scope.$watch('note.url', debounceSave);
-	$scope.$watch('note.content', debounceSave);
+	$scope.$watch('form.title', debounceSave);
+	$scope.$watch('form.url', debounceSave);
+	$scope.$watch('form.content', debounceSave);
+	$scope.$watch('form.notebook_id', save);
 
 	$scope.note = null;
+	
+	$scope.form = { title: '', url: '', content: '', notebook_id: 0 };
+
 	$scope.notebooks = NotebookService.notebooks;
 
 	// flag is used to show/hide an animated saved indicator

@@ -201,10 +201,10 @@
 			<div id="note" class="panel panel-default">
 
 				<div class="panel-heading">
-					<input class="panel-title" type="text" placeholder="Title of your note" ng-model="note.title" required />
+					<input class="panel-title" type="text" placeholder="Title of your note" ng-model="form.title" required />
 
 					<div>
-						<select class="form-control input-sm" id="notebook_id" ng-model="note.notebook_id" ng-options="book.id as book.title for book in notebooks"></select>				
+						<select class="form-control input-sm" id="notebook_id" ng-model="form.notebook_id" ng-options="book.id as book.title for book in notebooks"></select>				
 					</div>
 					&nbsp;
 					<div class="btn-group">
@@ -228,9 +228,9 @@
 					<div class="form-group">
 
 						<div class="input-group">
-							<input id="url" class="form-control" type="text" placeholder="If relevant, add a link here" ng-model="note.url" />
+							<input id="url" class="form-control" type="text" placeholder="If relevant, add a link here" ng-model="form.url" />
 							<span class="input-group-btn">
-								<button type="button" class="btn btn-default" type="button" onClick="window.open(url.value,'_blank');" ng-disabled="note.url == ''">
+								<button type="button" class="btn btn-default" type="button" onClick="window.open(form.url.value,'_blank');" ng-disabled="form.url == ''">
 									<span class="glyphicon glyphicon-new-window"></span>
 								</button>
 							</span>
@@ -239,7 +239,7 @@
 					</div>
  
 					<!-- check http://dev.evernote.com/doc/articles/enml.php for everote html format -->
-					<div class="text-angular" text-angular ta-toolbar-group-class="btn-group btn-group-sm" ng-model="note.content"></div>
+					<div class="text-angular" text-angular ta-toolbar-group-class="btn-group btn-group-sm" ng-model="form.content"></div>
 
 				</div>
 			</div>

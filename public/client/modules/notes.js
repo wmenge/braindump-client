@@ -93,7 +93,7 @@ notesModules.service( 'NoteService', [ '$rootScope', 'Notes', 'AllNotes', 'Noteb
 		selectNote: function(note) {
 			if (note.id) {
 				Notes.get({ notebookId: note.notebook_id, noteId: note.id }, function(serverNote) {
-					service.selectedNote = serverNote;
+					service.selectedNote = note;
 					$rootScope.$broadcast('notes.select', serverNote);
 				});
 			} else {
