@@ -1,0 +1,47 @@
+<form name="noteForm" id="noteForm" novalidate role="form">
+    <div id="note" class="panel panel-default">
+
+        <div class="panel-heading">
+            <input class="panel-title" type="text" placeholder="Title of your note" ng-model="formData.title" required />
+            
+            <div>
+                <select class="form-control input-sm" id="notebook_id" ng-model="formData.notebook_id" ng-options="book.id as book.title for book in notebooks" required><option></option></select>               
+            </div>
+            &nbsp;
+            <div class="btn-group">
+                <button ng-click="delete()" confirm="Are you sure?" type="button" class="btn btn-default btn-sm">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </button>
+            </div>
+        </div>
+
+        <div class="panel-body">
+
+            <div class="form-group input-group pull-right">
+                <p class="form-control-static">
+                    <strong>Modified:</strong> {{note.updated*1000 | date:'medium'}} 
+
+                    &nbsp;<span id="saved" ng-if="saved" class="text-success"><span class="glyphicon glyphicon glyphicon-ok"></span> Saved</span>
+                    <span id="save_error" ng-if="save_error" class="text-danger"><span class="glyphicon glyphicon glyphicon-exclamation-sign"></span> Error while saving</span> [{{noteForm.$pristine}}]
+                </p>
+            </div>
+
+            <div class="form-group">
+
+                <div class="input-group">
+                    <input id="url" class="form-control" type="text" placeholder="If relevant, add a link here" ng-model="formData.url" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" type="button" onClick="window.open(formData.url.value,'_blank');" ng-disabled="form.url == ''">
+                            <span class="glyphicon glyphicon-new-window"></span>
+                        </button>
+                    </span>
+                </div>
+
+            </div>
+
+            <!-- check http://dev.evernote.com/doc/articles/enml.php for everote html format -->
+            <div class="text-angular" text-angular ta-toolbar-group-class="btn-group btn-group-sm" ng-model="formData.content"></div>
+
+        </div>
+    </div>
+</form>

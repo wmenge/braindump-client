@@ -87,6 +87,10 @@
 	font-weight: bold;
 }
 
+a.list-group-item:focus {
+    background-color: #CEE1F2;
+    background-image: linear-gradient(to bottom,#CEE1F2 0,#AAD0F2 100%);
+}
 /* Animations */
 /* TODO:
 	- bounceIn effect does not work, fadeIs shown instead

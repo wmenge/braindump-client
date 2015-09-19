@@ -1,0 +1,44 @@
+<!-- Notebooks section -->
+<div class="panel panel-default" id="notebooks">
+
+    <div class="panel-heading">
+        <h3 class="panel-title">Notebooks
+            <div class="pull-right">
+                <button type="button" class="btn btn-default btn-xs" ng-click="showNewNotebookModal()">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
+            </div>
+        </h3>
+    </div>
+
+    <div class="panel-body">
+        <div class="list-group">
+            <a class="list-group-item"
+                ui-sref="notebooks.allnotes" 
+                ui-sref-active='active'>
+                All notes
+                <span class="badge pull-right">{{totalNoteCount()}}</span>
+            </a>
+            <a ng-repeat="book in notebooks | orderBy:sort" class="list-group-item"
+                ui-sref="notebooks.notes({ notebookId: book.id })"
+                ui-sref-opts="{ inherit: false }" 
+                ui-sref-active='active'>
+                {{book.title}}
+                <span class="badge pull-right">{{book.noteCount}}</span>
+            </a>
+            
+        </div>
+
+    </div>
+</div>
+
+<div ui-view="noteList">
+    <!-- Dummy notelist section -->
+    <div class="panel panel-default" id="notes">
+        <div class="panel-heading"></div>
+    </div>
+    <!-- Dummy notes detail section -->
+    <div class="panel panel-default" id="note">
+        <div class="panel-heading"></div>
+    </div>
+</div>

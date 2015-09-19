@@ -16,15 +16,16 @@
   ],
   "dependencies": {
     "angular": "~1.2.20",
-    "angular-route": "~1.2.20",
-    "angular-ui-bootstrap-bower": "~0.12.1",
-    "bootstrap-css-only": "~3.3.2",
-    "animate.css": "~3.2.3",
+    "angular-animate": "~1.2.20",
+    "angular-confirm-modal": "~1.1.0",
     "angular-http-auth": "~1.2.2",
     "angular-loading-bar": "~0.7.1",
-    "textAngular": "1.1.2",
-    "font-awesome-bower": "~4.3.0",
     "angular-resource": "~1.2.20",
-    "angular-animate": "~1.2.20"
+    "angular-ui-bootstrap-bower": "~0.12.1",
+    "angular-ui-router": "~0.2.15",
+    "animate.css": "~3.2.3",
+    "bootstrap-css-only": "~3.3.2",
+    "font-awesome-bower": "~4.3.0",
+    "textAngular": "1.2.2"
   }
 }

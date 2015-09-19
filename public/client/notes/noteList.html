@@ -1,0 +1,76 @@
+<!-- Notes section -->
+<div class="panel panel-default" id="notes">
+
+    <!-- Modal dialog to modify Notebook title -->
+    <script type="text/ng-template" id="updateNotebookModal.html">
+        <div class="modal-header">
+            <h3 class="modal-title">Change title</h3>
+        </div>
+        <div class="modal-body">
+            <form name="updateNotebookForm" id="updateNotebookForm" novalidate>
+                <input type="text" class="form-control" placeholder="Title of notebook" ng-model="notebook.title" required />
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="update()" ng-disabled="updateNotebookForm.$invalid || !updateNotebookForm.$dirty">Ok</button>
+            <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+
+    <div class="panel-heading">
+        <h3 class="panel-title">{{selectedNotebook.title}}</span> <span class="label label-default" ng-show="search">Filtered</span>
+
+            <div class="pull-right">
+                <div class="btn-group" dropdown>
+                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" dropdown-toggle>
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a ui-sref=".({ sort: 'title'})"  ui-sref-active="selected">Sort by title (A to Z)</a></li>
+                        <li><a ui-sref=".({ sort: '-title'})" ui-sref-active="selected">Sort by title (Z to A)</a></li>
+                        <li><a ui-sref=".({ sort: 'updated'})" ui-sref-active="selected">Sort by date (Old to New)</a></li>
+                        <li><a ui-sref=".({ sort: '-updated'})" ui-sref-active="selected">Sort by date (New to Old)</a></li>
+                        
+                        <li class="divider"></li>
+                        <li ng-class="{disabled: (createButtonDisabled())}"><a ng-click="showUpdateNotebookModal(selectedNotebook)">Rename notebook...</a></li>
+                        <li ng-class="{disabled: (createButtonDisabled())}"><a ng-click="deleteNotebook(selectedNotebook)" confirm="Are you sure?">Delete notebook...</a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </h3>
+    </div>
+
+    <div class="panel-body">
+        <div class="list-group">
+            <a class="noteListItem list-group-item" ng-repeat="note in notes" 
+                ui-sref=".detail({ notebookId: note.notebook_id, noteId: note.id })"
+                ui-sref-active='active' > 
+                <h5 class="list-group-item-heading">{{note.title}}</h5>
+                <p>{{note.updated*1000 | date:'medium'}}</p>
+            </a>
+        </div>
+
+        <div ng-show="notes.length == 0">
+            <p class="text-center" style="padding: 15px;" ng-show="!search">
+                <small><strong>No notes</strong> in this notebook. You can create a <a ui-sref=".create">new note</a>.</small>
+            </p>
+
+            <p class="text-center" style="padding: 15px;" ng-show="search">
+                <small><strong>No search result</strong> found. Try again with a different terms or try searching in a different notebook.
+            </p>
+
+        </div>
+    </div>
+
+
+
+
+</div>
+
+<div ui-view>
+    <!-- Dummy notes detail section -->
+    <div class="panel panel-default" id="note">
+        <div class="panel-heading"></div>
+    </div>
+</div>

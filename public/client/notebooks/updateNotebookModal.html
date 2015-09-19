@@ -1,0 +1,12 @@
+<div class="modal-header">
+    <h3 class="modal-title">Change title</h3>
+</div>
+<div class="modal-body">
+    <form name="updateNotebookForm" id="updateNotebookForm" novalidate>
+        <input type="text" class="form-control" placeholder="Title of notebook" ng-model="notebook.title" required />
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="update()" ng-disabled="updateNotebookForm.$invalid || !updateNotebookForm.$dirty">Ok</button>
+    <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+</div>

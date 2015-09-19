@@ -1,249 +1,64 @@
 <!doctype html>
 <html lang="en" ng-app="BrainDumpApp">
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>BrainDump</title>
-	<script type="text/javascript" src="libs/angular/angular.min.js"></script>
-	<script type="text/javascript" src="libs/angular-route/angular-route.min.js"></script>
-	<script type="text/javascript" src="libs/angular-resource/angular-resource.min.js"></script>
-	<script type="text/javascript" src="libs/angular-animate/angular-animate.min.js"></script>
-	<script type="text/javascript" src="libs/angular-ui-bootstrap-bower/ui-bootstrap.min.js"></script>
-	<script type="text/javascript" src="libs/angular-ui-bootstrap-bower/ui-bootstrap-tpls.min.js"></script>
-	<script type="text/javascript" src='libs/textAngular/textAngular.min.js'></script>
-	<script type="text/javascript" src='libs/angular-sanitize/angular-sanitize.min.js'></script>
-	<script type="text/javascript" src='libs/angular-loading-bar/build/loading-bar.min.js'></script>
-	<script src="modules/notebooks.js"></script>
-	<script src="modules/notes.js"></script>
-	<script src="modules/user-configuration.js"></script>
-	<script src="app.js"></script>
-	<script src="config.js"></script>
-	<link rel='stylesheet prefetch' href='libs/bootstrap-css-only/css/bootstrap.min.css'>
-	<link rel='stylesheet prefetch' href='libs/bootstrap-css-only/css/bootstrap-theme.min.css'>
-	<link rel='stylesheet prefetch' href='libs/font-awesome-bower/css/font-awesome.css'>
-	<link rel='stylesheet prefetch' href='libs/angular-loading-bar/build/loading-bar.min.css'>
-	<link rel='stylesheet prefetch' href='libs/animate.css/animate.min.css'>
-	<link rel='stylesheet prefetch' href='layout.css'>
-	<link rel='stylesheet prefetch' href='style.css'>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BrainDump</title>
+
+    <script type="text/javascript" src="libs/angular/angular.min.js"></script>
+    <script type="text/javascript" src="libs/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script type="text/javascript" src="libs/angular-resource/angular-resource.min.js"></script>
+    <script type="text/javascript" src="libs/angular-animate/angular-animate.min.js"></script>
+    <script type="text/javascript" src="libs/angular-ui-bootstrap-bower/ui-bootstrap.min.js"></script>
+    <script type="text/javascript" src="libs/angular-ui-bootstrap-bower/ui-bootstrap-tpls.min.js"></script>
+    <!--<script type="text/javascript" src='libs/textAngular/textAngular.min.js'></script>-->
+    <script type="text/javascript" src='libs/textAngular/dist/textAngular.min.js'></script>
+    <script type="text/javascript" src='libs/angular-sanitize/angular-sanitize.min.js'></script>
+    <script type="text/javascript" src='libs/angular-loading-bar/build/loading-bar.min.js'></script>
+    <script type="text/javascript" src='libs/angular-confirm-modal/angular-confirm.js'></script>
+
+    <script src="notebooks/notebookModule.js"></script>
+    <script src="notes/noteModule.js"></script>
+    <script src="modules/user-configuration.js"></script>
+    <script src="app.js"></script>
+    <script src="config.js"></script>
+
+    <link rel='stylesheet prefetch' href='libs/bootstrap-css-only/css/bootstrap.min.css'>
+    <link rel='stylesheet prefetch' href='libs/bootstrap-css-only/css/bootstrap-theme.min.css'>
+    <link rel='stylesheet prefetch' href='libs/font-awesome-bower/css/font-awesome.css'>
+    <link rel='stylesheet prefetch' href='libs/angular-loading-bar/build/loading-bar.min.css'>
+    <link rel='stylesheet prefetch' href='libs/animate.css/animate.min.css'>
+    <link rel='stylesheet prefetch' href='layout.css'>
+    <link rel='stylesheet prefetch' href='style.css'>
+
 </head>
 <body ng-controller="AppController">
 
-	<!-- Header -->
-	<div class="navbar navbar-inverse navbar-static-top" role="navigation">
-		<div class="navbar-header">
-			<span class="navbar-brand">
-				<span id="brain">Brain</span><span id="dump">Dump</span>
-			</span>
-		</div>
+    <!-- Header -->
+    <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+        <div class="navbar-header">
+            <span class="navbar-brand">
+                <span id="brain">Brain</span><span id="dump">Dump</span>
+            </span>
+        </div>
 
-		<form class="navbar-form navbar-left form-inline" role="search">
-			<div class="form-group">
-				<div class="input-group">
-					<input placeholder="Search" type="text" class="form-control" ng-model="query">
-					<span class="input-group-btn">
-						<button type="submit"class="btn btn-default" type="button" ng-click="search()">
-							<span class="glyphicon glyphicon-search"></span>
-						</button>
-					</span>
-				</div>
-			</div>
-		</form>
+        <div ui-view='noteSearch'></div>
+    </div>
 
-		<span class="navbar-left">
-	
-		<button type="button" class="btn btn-default navbar-btn" ng-disabled="createButtonDisabled()" ng-click="createNote()">
-			<span class="glyphicon glyphicon-plus"></span> Create note
-		</button>	
-
-		<span id="userConfiguration" ng-controller="UserConfigurationController" ng-init="init()">
-
-			<button type="button" class="btn btn-default navbar-btn" ng-click="showUserConfigurationModal()">
-				<span class="glyphicon glyphicon-cog">{{configuration.test}}</span>
-			</button>	
-
-			<!-- Modal dialog to modify User Configuration -->
-			<script type="text/ng-template" id="userConfigurationModal.html">
-				<div class="modal-header"><h3 class="modal-title">User settings</h3></div>
-				<div class="modal-body">
-					<form name="userConfigurationForm" id="userConfigurationForm" novalidate>
-						<label for="email_to_notebook">Save emails from me to the following notebook:</label>
-						<select class="form-control input-sm" name="email_to_notebook" id="email_to_notebook" ng-model="configuration.email_to_notebook" ng-options="book.id as book.title for book in notebooks"></select>	
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button class="btn btn-primary" ng-click="save()" ng-disabled="userConfigurationForm.$invalid || !userConfigurationForm.$dirty">Save</button>
-					<button class="btn btn-default" ng-click="cancel()">Cancel</button>
-				</div>
-			</script>
-
-		</span>
-
-		</span>
-
-	</div>
-
-	<div id="app">
-
-		<!-- Notebooks section -->
-		<div class="panel panel-default" id="notebooks" ng-controller="NotebookListController" ng-init="init()">
-
-			<!-- Modal dialog to create Notebook -->
-			<script type="text/ng-template" id="newNotebookModal.html">
-				<div class="modal-header">
-					<h3 class="modal-title">Create notebook</h3>
-				</div>
-				<div class="modal-body">
-					<form name="createNotebookForm" id="createNotebookForm" novalidate>
-						<input type="text" class="form-control" placeholder="Title of new notebook" ng-model="notebook.title" required />
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button class="btn btn-primary" ng-click="create()" ng-disabled="createNotebookForm.$invalid || !createNotebookForm.$dirty">Create</button>
-					<button class="btn btn-default" ng-click="cancel()">Cancel</button>
-				</div>
-			</script>
-
-			<div class="panel-heading">
-				<h3 class="panel-title">Notebooks
-					<div class="pull-right">
-						<button type="button" class="btn btn-default btn-xs" ng-click="showNewNotebookModal()">
-							<span class="glyphicon glyphicon-plus"></span>
-						</button>
-					</div>
-				</h3>
-			</div>
-
-			<div class="panel-body">
-
-				<div class="list-group">
-					<a class="list-group-item" ng-class="{active: (noteBookIsSelected(magicNotebook))}" ng-click="selectNotebook(magicNotebook)">
-						{{magicNotebook.title}}
-						<span class="badge pull-right">{{totalNoteCount()}}</span>
-					</a>
-					<a ng-repeat="book in notebooks | orderBy:sortPredicate" class="list-group-item" ng-class="{active: (noteBookIsSelected(book))}" ng-click="selectNotebook(book)">
-						{{book.title}}
-						<span class="badge pull-right">{{book.noteCount}}</span>
-					</a>
-				</div>
-
-			</div>
-		</div>
-
-		<!-- Notes section -->
-		<div class="panel panel-default" id="notes" ng-controller="NoteListController" ng-hide="selectedNotebook == null">
-
-			<!-- Modal dialog to modify Notebook title -->
-			<script type="text/ng-template" id="updateNotebookModal.html">
-				<div class="modal-header">
-					<h3 class="modal-title">Change title</h3>
-				</div>
-				<div class="modal-body">
-					<form name="updateNotebookForm" id="updateNotebookForm" novalidate>
-						<input type="text" class="form-control" placeholder="Title of notebook" ng-model="notebook.title" required />
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button class="btn btn-primary" ng-click="update()" ng-disabled="updateNotebookForm.$invalid || !updateNotebookForm.$dirty">Ok</button>
-					<button class="btn btn-default" ng-click="cancel()">Cancel</button>
-				</div>
-			</script>
-
-			<div class="panel-heading">
-				<h3 class="panel-title">{{selectedNotebook.title}} <span ng-show="search">(filtered)</span>
-
-					<div class="pull-right">
-						<div class="btn-group" dropdown>
-							<button type="button" class="btn btn-default btn-xs dropdown-toggle" dropdown-toggle>
-								<span class="caret"></span>
-							</button>
-							<ul class="dropdown-menu" role="menu">
-								<li><a ng-class="{selected: (sortPredicate=='title')}" href="#" ng-click="sortPredicate='title';">Sort by title (A to Z)</a></li>
-								<li><a ng-class="{selected: (sortPredicate=='-title')}" href="#" ng-click="sortPredicate='-title';">Sort by title (Z to A)</a></li>
-								<li><a ng-class="{selected: (sortPredicate=='modified')}" href="#" ng-click="sortPredicate='modified';">Sort by date (Old to New)</a></li>
-								<li><a ng-class="{selected: (sortPredicate=='-modified')}" href="#" ng-click="sortPredicate='-modified';">Sort by date (New to Old)</a></li>
-								
-								<li class="divider"></li>
-								<li ng-class="{disabled: (createButtonDisabled())}"><a href="#" ng-click="showRenameNotebookModal(selectedNotebook)">Rename notebook...</a></li>
-								<li ng-class="{disabled: (createButtonDisabled())}"><a href="#" ng-click="createNote()">Create new note</a></li>
-								<li class="divider"></li>
-								<li ng-class="{disabled: (createButtonDisabled())}"><a href="#" ng-click="deleteNotebook(selectedNotebook)">Delete notebook...</a></li>
-							</ul>
-						</div>
-					</div>
-
-				</h3>
-			</div>
-
-			<div class="panel-body">
-				<div class="list-group">
-					<a class="noteListItem list-group-item" ng-repeat="note in notes | orderBy:sortPredicate" ng-click="selectNote(note)" ng-class="{active: (noteIsSelected(note))}">
-						<h5 class="list-group-item-heading">{{note.title}}</h5>
-						<p>{{note.updated*1000 | date:'medium'}}</p>
-					</a>
-
-				</div>
-				<div ng-show="notes.length == 0">
-					<p class="text-center" style="padding: 15px;" ng-show="!search">
-						<small><strong>No notes</strong> in this notebook. You can create a <a href="#"  ng-click="createNote()">new note</a>.</small>
-					</p>
-
-					<p class="text-center" style="padding: 15px;" ng-show="search">
-						<small><strong>No search result</strong> found. Try again with a different terms or try searching in a different notebook.
-					</p>
-
-				</div>
-			</div>
-		</div>
-
-		<form name="noteForm" id="noteForm" novalidate role="form" ng-controller="NoteDetailController" ng-show="note && note.notebook_id">
-
-			<div id="note" class="panel panel-default">
-
-				<div class="panel-heading">
-					<input class="panel-title" type="text" placeholder="Title of your note" ng-model="form.title" required />
-
-					<div>
-						<select class="form-control input-sm" id="notebook_id" ng-model="form.notebook_id" ng-options="book.id as book.title for book in notebooks"></select>				
-					</div>
-					&nbsp;
-					<div class="btn-group">
-						<button ng-click="deleteNote(note)" type="button" class="btn btn-default btn-sm">
-							<span class="glyphicon glyphicon-trash"></span>
-						</button>
-					</div>
-				</div>
-
-				<div class="panel-body">
-
-					<div class="form-group input-group pull-right">
-						<p class="form-control-static">
-							<strong>Modified:</strong> {{note.updated*1000 | date:'medium'}}
-
-							&nbsp;<span id="saved" ng-if="saved" class="text-success"><span class="glyphicon glyphicon glyphicon-ok"></span> Saved</span>
-							<span id="save_error" ng-if="save_error" class="text-danger"><span class="glyphicon glyphicon glyphicon-exclamation-sign"></span> Error while saving</span>
-						</p>
-					</div>
-
-					<div class="form-group">
-
-						<div class="input-group">
-							<input id="url" class="form-control" type="text" placeholder="If relevant, add a link here" ng-model="form.url" />
-							<span class="input-group-btn">
-								<button type="button" class="btn btn-default" type="button" onClick="window.open(form.url.value,'_blank');" ng-disabled="form.url == ''">
-									<span class="glyphicon glyphicon-new-window"></span>
-								</button>
-							</span>
-						</div>
-
-					</div>
- 
-					<!-- check http://dev.evernote.com/doc/articles/enml.php for everote html format -->
-					<div class="text-angular" text-angular ta-toolbar-group-class="btn-group btn-group-sm" ng-model="form.content"></div>
-
-				</div>
-			</div>
-		</form>
-	</div>
+    <div ui-view id="app">
+        <!-- Dummy notebook section -->
+        <div class="panel panel-default" id="notebooks">
+            <div class="panel-heading"></div>
+        </div>
+        <!-- Dummy notelist section -->
+        <div class="panel panel-default" id="notes">
+            <div class="panel-heading"></div>
+        </div>
+        <!-- Dummy notes detail section -->
+        <div class="panel panel-default" id="note">
+            <div class="panel-heading"></div>
+        </div>
+    </div>
 </body>
 </html>
