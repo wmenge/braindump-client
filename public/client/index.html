@@ -6,24 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>BrainDump</title>
 
-    <script type="text/javascript" src="libs/angular/angular.min.js"></script>
-    <script type="text/javascript" src="libs/angular-ui-router/release/angular-ui-router.min.js"></script>
-    <script type="text/javascript" src="libs/angular-resource/angular-resource.min.js"></script>
-    <script type="text/javascript" src="libs/angular-animate/angular-animate.min.js"></script>
-    <script type="text/javascript" src="libs/angular-ui-bootstrap-bower/ui-bootstrap.min.js"></script>
-    <script type="text/javascript" src="libs/angular-ui-bootstrap-bower/ui-bootstrap-tpls.min.js"></script>
-    <!--<script type="text/javascript" src='libs/textAngular/textAngular.min.js'></script>-->
-    <script type="text/javascript" src='libs/textAngular/dist/textAngular.min.js'></script>
-    <script type="text/javascript" src='libs/angular-sanitize/angular-sanitize.min.js'></script>
-    <script type="text/javascript" src='libs/angular-loading-bar/build/loading-bar.min.js'></script>
-    <script type="text/javascript" src='libs/angular-confirm-modal/angular-confirm.js'></script>
-
-    <script src="notebooks/notebookModule.js"></script>
-    <script src="notes/noteModule.js"></script>
-    <script src="modules/user-configuration.js"></script>
-    <script src="app.js"></script>
-    <script src="config.js"></script>
-
     <link rel='stylesheet prefetch' href='libs/bootstrap-css-only/css/bootstrap.min.css'>
     <link rel='stylesheet prefetch' href='libs/bootstrap-css-only/css/bootstrap-theme.min.css'>
     <link rel='stylesheet prefetch' href='libs/font-awesome-bower/css/font-awesome.css'>
@@ -46,7 +28,7 @@
         <div ui-view='noteSearch'></div>
     </div>
 
-    <div ui-view id="app">
+    <div ui-view id="app" ng-cloak>
         <!-- Dummy notebook section -->
         <div class="panel panel-default" id="notebooks">
             <div class="panel-heading"></div>
@@ -60,5 +42,22 @@
             <div class="panel-heading"></div>
         </div>
     </div>
+
+    <script type="text/javascript" src="libs/angular/angular.min.js"></script>
+    <script type="text/javascript" src="libs/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script type="text/javascript" src="libs/angular-resource/angular-resource.min.js"></script>
+    <script type="text/javascript" src="libs/angular-animate/angular-animate.min.js"></script>
+    <script type="text/javascript" src="libs/angular-ui-bootstrap-bower/ui-bootstrap.min.js"></script>
+    <script type="text/javascript" src="libs/angular-ui-bootstrap-bower/ui-bootstrap-tpls.min.js"></script>
+    <script type="text/javascript" src='libs/textAngular/dist/textAngular.min.js'></script>
+    <script type="text/javascript" src='libs/angular-sanitize/angular-sanitize.min.js'></script>
+    <script type="text/javascript" src='libs/angular-loading-bar/build/loading-bar.min.js'></script>
+    <script type="text/javascript" src='libs/angular-confirm-modal/angular-confirm.js'></script>
+
+    <script src="notebooks/notebookModule.js"></script>
+    <script src="notes/noteModule.js"></script>
+    <script src="userConfiguration/userConfigurationModule.js"></script>
+    <script src="app.js"></script>
+    <script src="config.js"></script>
 </body>
 </html>
