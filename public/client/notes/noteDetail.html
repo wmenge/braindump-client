@@ -31,7 +31,7 @@
                 <div class="input-group">
                     <input id="url" class="form-control" type="text" placeholder="If relevant, add a link here" ng-model="formData.url" />
                     <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" type="button" onClick="window.open(formData.url.value,'_blank');" ng-disabled="form.url == ''">
+                        <button type="button" class="btn btn-default" type="button" onClick="window.open(noteForm.url.value,'_blank');" ng-disabled="!formData.url">
                             <span class="glyphicon glyphicon-new-window"></span>
                         </button>
                     </span>
