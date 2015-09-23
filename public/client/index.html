@@ -25,7 +25,17 @@
             </span>
         </div>
 
-        <div ui-view='noteSearch'></div>
+        <span ui-view='noteSearch'></span>
+
+        <span id="userConfiguration" ng-controller="UserConfigurationController" ng-init="init()">
+
+            <button type="button" class="btn btn-default navbar-btn" ng-click="showUserConfigurationModal()">
+                <span class="glyphicon glyphicon-cog"></span>
+            </button>   
+
+        </span>
+
+
     </div>
 
     <div ui-view id="app" ng-cloak>
