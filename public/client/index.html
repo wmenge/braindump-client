@@ -27,14 +27,18 @@
 
         <span ui-view='noteSearch'></span>
 
-        <span id="userConfiguration" ng-controller="UserConfigurationController" ng-init="init()">
+        <span id="userConfiguration" ng-controller="UserConfigurationController" ng-init="init()" class="pull-right">
 
-            <button type="button" class="btn btn-default navbar-btn" ng-click="showUserConfigurationModal()">
-                <span class="glyphicon glyphicon-cog"></span>
-            </button>   
-
+            <div class="btn-group" dropdown>
+                <button type="button" class="navbar-btn btn btn-default dropdown-toggle" dropdown-toggle>
+                    {{user.first_name}} {{user.last_name}} <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">   
+                    <li><a ng-click="showUserConfigurationModal()"><span class="glyphicon glyphicon-cog"></span> Preferences...</a></li>
+                </ul>
+            </div>
+        
         </span>
-
 
     </div>
 
@@ -66,6 +70,7 @@
 
     <script src="notebooks/notebookModule.js"></script>
     <script src="notes/noteModule.js"></script>
+    <script src="user/userModule.js"></script>
     <script src="userConfiguration/userConfigurationModule.js"></script>
     <script src="app.js"></script>
     <script src="config.js"></script>

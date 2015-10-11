@@ -6,29 +6,10 @@ userConfigurationModule.factory('UserConfiguration', ['$resource', 'API_URL', fu
         { id: '@id' },
         { update: { method: 'PUT' } });
 }]);
-/*
-userConfigurationModule.service( 'UserConfigurationService', [ '$rootScope', 'UserConfiguration', function($rootScope, UserConfiguration) {
 
-    var service = {
-        configuration: null,
-        getConfiguration: function (success) {
-            service.configuration = UserConfiguration.get(function() {
-                success();
-            });
-        },
-        updateConfiguration: function(configuration, success) {
-            newConfiguration = new UserConfiguration(configuration);
-            newConfiguration.$update(function() {
-                success();
-            });
-        }
-    };
+userConfigurationModule.controller('UserConfigurationController', ['$scope', '$modal', 'User', 'UserConfiguration', 'Notebooks', function($scope, $modal, User, UserConfiguration, Notebooks) {
 
-   return service;
-   
-}]);
-*/
-userConfigurationModule.controller('UserConfigurationController', ['$scope', '$modal', 'UserConfiguration', 'Notebooks', function($scope, $modal, UserConfiguration, Notebooks) {
+    $scope.user = User.get();
 
     $scope.showUserConfigurationModal = function(configuration) {
 
@@ -36,6 +17,9 @@ userConfigurationModule.controller('UserConfigurationController', ['$scope', '$m
             templateUrl: 'userConfiguration/updateUserConfigurationModal.html',
             controller: 'userConfigurationModalController',
             resolve: {
+                user: function() {
+                    return $scope.user;
+                },
                 configuration: ['UserConfiguration', function(UserConfiguration) {
                     return UserConfiguration.get();
                 }],
@@ -47,8 +31,9 @@ userConfigurationModule.controller('UserConfigurationController', ['$scope', '$m
     };
 }]);
 
-userConfigurationModule.controller('userConfigurationModalController', ['$scope', '$modalInstance', 'configuration', 'notebooks', function($scope, $modalInstance, configuration, notebooks) {
+userConfigurationModule.controller('userConfigurationModalController', ['$scope', '$modalInstance', 'user', 'configuration', 'notebooks', function($scope, $modalInstance, user, configuration, notebooks) {
 
+    $scope.user = user;
     $scope.configuration = configuration;
     $scope.notebooks = notebooks;
 
