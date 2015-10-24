@@ -20,6 +20,7 @@
     "angular-confirm-modal": "~1.1.0",
     "angular-http-auth": "~1.2.2",
     "angular-loading-bar": "~0.7.1",
+    "angular-moment": "~0.10.3",
     "angular-resource": "~1.2.20",
     "angular-ui-bootstrap-bower": "~0.12.1",
     "angular-ui-router": "~0.2.15",

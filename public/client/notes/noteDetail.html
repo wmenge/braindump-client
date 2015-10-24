@@ -19,8 +19,7 @@
 
             <div class="form-group input-group pull-right">
                 <p class="form-control-static">
-                    <strong>Modified:</strong> {{note.updated*1000 | date:'medium'}} 
-
+                    <strong>Modified:</strong> <span>{{note.updated*1000 | amDateFormat:'dddd DD-MM-YYYY [om] hh:mm:ss'}}</span>
                     &nbsp;<span id="saved" ng-if="saved" class="text-success"><span class="glyphicon glyphicon glyphicon-ok"></span> Saved</span>
                     <span id="save_error" ng-if="save_error" class="text-danger"><span class="glyphicon glyphicon glyphicon-exclamation-sign"></span> Error while saving</span>
                 </p>
