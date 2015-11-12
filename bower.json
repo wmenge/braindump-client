@@ -21,6 +21,7 @@
     "angular-confirm-modal": "latest",
     "angular-http-auth": "latest",
     "angular-loading-bar": "latest",
+    "angular-moment": "latest",
     "angular-resource": "1.x",
     "angular-sanitize": "1.x",
     "angular-trix-editor": "~0.3.2",
