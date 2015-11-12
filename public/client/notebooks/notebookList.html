@@ -19,7 +19,7 @@
                 All notes
                 <span class="badge pull-right">{{totalNoteCount()}}</span>
             </a>
-            <a ng-repeat="book in notebooks | orderBy:sort" class="list-group-item"
+            <a ng-repeat="book in notebooks" class="list-group-item"
                 ui-sref="notebooks.notes({ notebookId: book.id })"
                 ui-sref-opts="{ inherit: false }" 
                 ui-sref-active='active'>

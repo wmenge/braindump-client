@@ -34,7 +34,8 @@ notesModules.config(function($stateProvider, $urlRouterProvider) {
       },
       resolve: {
         notes: ['AllNotes', '$stateParams', function(AllNotes, $stateParams) {
-          return AllNotes.query($stateParams).$promise;
+            if (!$stateParams.sort) { $stateParams.sort = '-updated'; }
+            return AllNotes.query($stateParams).$promise;
         }]
       }
     })
@@ -52,7 +53,8 @@ notesModules.config(function($stateProvider, $urlRouterProvider) {
       },
       resolve: {
         notes: ['Notes', '$stateParams', function(Notes, $stateParams) {
-          return Notes.query($stateParams).$promise;
+            if (!$stateParams.sort) { $stateParams.sort = '-updated'; }
+            return Notes.query($stateParams).$promise;
         }]
       }
     })

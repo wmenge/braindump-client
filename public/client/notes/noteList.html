@@ -46,7 +46,7 @@
             <a class="noteListItem list-group-item" ng-repeat="note in notes" 
                 ui-sref=".detail({ notebookId: note.notebook_id, noteId: note.id })"
                 ui-sref-active='active' > 
-                <h5 class="list-group-item-heading">{{note.title}}</h5>
+                <h5 class="list-group-item-heading" ng-bind-html="note.title"></h5>
                 <time>{{ note.updated*1000 | amCalendar }}</time>
             </a>
         </div>
