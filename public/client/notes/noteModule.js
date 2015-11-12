@@ -149,7 +149,14 @@ notesModules.controller('NoteListController', ['$scope', 'notes', '$state', '$st
 
 }]);
 
-notesModules.controller('NoteDetailController', ['$rootScope', '$scope', '$timeout', '$state', 'note', function($rootScope, $scope, $timeout, $state, note) {
+function decodeHtml(html) {
+    var txt = document.createElement("textarea");
+    txt.innerHTML = html;
+    return txt.value;
+}
+
+
+notesModules.controller('NoteDetailController', ['$rootScope', '$scope', '$timeout', '$state', 'note', '$sce', function($rootScope, $scope, $timeout, $state, note, $sce) {
 
     // Autosave: http://adamalbrecht.com/2013/10/30/auto-save-your-model-in-angular-js-with-watch-and-debounce/
     var timeout = null;
@@ -158,6 +165,11 @@ notesModules.controller('NoteDetailController', ['$rootScope', '$scope', '$timeo
 
     $scope.note = note;
     $scope.formData = angular.copy($scope.note);
+
+    // Trust html entities in title
+    // http://stackoverflow.com/questions/7394748/whats-the-right-way-to-decode-a-string-that-has-special-html-entities-in-it?lq=1
+    // http://stackoverflow.com/questions/5796718/html-entity-decode
+    $scope.formData.title = decodeHtml($scope.formData.title);
 
     $scope.save = function() {
 
@@ -176,6 +188,8 @@ notesModules.controller('NoteDetailController', ['$rootScope', '$scope', '$timeo
                 // REST roundtrip
                 if ($scope.noteForm.$pristine) {
                     $scope.formData = angular.copy($scope.note);
+                    // Trust html entities in title (again)
+                    $scope.formData.title = decodeHtml($scope.formData.title);
                 }
             };
 
