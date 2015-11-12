@@ -183,11 +183,12 @@ notesModules.controller('NoteDetailController', ['$rootScope', '$scope', '$timeo
 
             var callback = function(modifiedNote) {
                 $scope.note = modifiedNote;
-
+                $scope.formData.id = $scope.note.id;
                 // user could have edited the form during the
                 // REST roundtrip
                 if ($scope.noteForm.$pristine) {
-                    $scope.formData = angular.copy($scope.note);
+                    //$scope.formData = angular.copy($scope.note);
+
                     // Trust html entities in title (again)
                     $scope.formData.title = decodeHtml($scope.formData.title);
                 }

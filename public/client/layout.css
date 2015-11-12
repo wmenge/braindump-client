@@ -79,17 +79,7 @@ div#note .panel-heading input {
 	flex: 1;
 } 
 
-.text-angular {
-	/* div.text-angular is both a flex container... */
-	display: -webkit-flex;
-	display: flex;
-	-webkit-flex-direction: column;
-	flex-direction: column;
-	/* ... and a flex item */
-	-webkit-flex: 1;
-	flex: 1;
-}
-.ta-editor {
+trix-editor {
 	-webkit-flex: 1;
 	flex: 1;
 	overflow: scroll;

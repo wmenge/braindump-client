@@ -15,7 +15,6 @@
     "tests"
   ],
   "dependencies": {
-    "textAngular": "1.2.2"
     "angular": "1.x",
     "angular-animate": "latest",
     "angular-confirm-modal": "latest",
@@ -31,5 +30,6 @@
     "animate.css": "latest",
     "bootstrap-css-only": "latest",
     "font-awesome-bower": "latest",
+    "trix": "~0.9.0"
   }
 }
