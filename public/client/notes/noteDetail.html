@@ -2,10 +2,10 @@
     <div id="note" class="panel panel-default">
 
         <div class="panel-heading">
-            <input class="panel-title" type="text" placeholder="Title of your note" ng-model="formData.title" required />
+            <input class="panel-title" type="text" placeholder="Title of your note" ng-model="formData.title" ng-change="debounceSave()" required />
             
             <div>
-                <select class="form-control input-sm" id="notebook_id" ng-model="formData.notebook_id" ng-options="book.id as book.title for book in notebooks" required><option></option></select>               
+                <select class="form-control input-sm" id="notebook_id" ng-model="formData.notebook_id" ng-options="book.id as book.title for book in notebooks" ng-change="debounceSave()" required><option></option></select>               
             </div>
             &nbsp;
             <div class="btn-group">
@@ -28,7 +28,7 @@
             <div class="form-group">
 
                 <div class="input-group">
-                    <input id="url" class="form-control" type="text" placeholder="If relevant, add a link here" ng-model="formData.url" />
+                    <input id="url" class="form-control" type="text" placeholder="If relevant, add a link here" ng-model="formData.url" ng-change="debounceSave()" />
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" type="button" onClick="window.open(noteForm.url.value,'_blank');" ng-disabled="!formData.url">
                             <span class="glyphicon glyphicon-new-window"></span>

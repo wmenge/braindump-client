@@ -228,7 +228,8 @@ notesModules.controller('NoteDetailController', ['$rootScope', '$scope', '$timeo
         }
     };
 
-    var debounceSave = function(newVal, oldVal) {
+    $scope.debounceSave = function() {
+        
         if ($scope.noteForm.$dirty && $scope.noteForm.$valid) {
             if (timeout) {
                 $timeout.cancel(timeout);
@@ -237,12 +238,5 @@ notesModules.controller('NoteDetailController', ['$rootScope', '$scope', '$timeo
             timeout = $timeout($scope.save, 1000 * delay);  // 1000 = 1 second
         }
     };
-
-    // Watch field changes to implement autosave
-    // todo: replace with form field debounce (in newer angular version)
-    $scope.$watch('formData.title', debounceSave);
-    $scope.$watch('formData.url', debounceSave);
-    $scope.$watch('formData.content', debounceSave);
-    $scope.$watch('formData.notebook_id', $scope.save);
 
 }]);
