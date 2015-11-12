@@ -15,18 +15,20 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "~1.2.20",
-    "angular-animate": "~1.2.20",
-    "angular-confirm-modal": "~1.1.0",
-    "angular-http-auth": "~1.2.2",
-    "angular-loading-bar": "~0.7.1",
-    "angular-moment": "~0.10.3",
-    "angular-resource": "~1.2.20",
-    "angular-ui-bootstrap-bower": "~0.12.1",
-    "angular-ui-router": "~0.2.15",
-    "animate.css": "~3.2.3",
-    "bootstrap-css-only": "~3.3.2",
-    "font-awesome-bower": "~4.3.0",
     "textAngular": "1.2.2"
+    "angular": "1.x",
+    "angular-animate": "latest",
+    "angular-confirm-modal": "latest",
+    "angular-http-auth": "latest",
+    "angular-loading-bar": "latest",
+    "angular-resource": "1.x",
+    "angular-sanitize": "1.x",
+    "angular-trix-editor": "~0.3.2",
+    "angular-ui-bootstrap-bower": "latest",
+    "angular-ui-event": "latest",
+    "angular-ui-router": "latest",
+    "animate.css": "latest",
+    "bootstrap-css-only": "latest",
+    "font-awesome-bower": "latest",
   }
 }
