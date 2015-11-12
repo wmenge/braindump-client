@@ -7,13 +7,13 @@ userConfigurationModule.factory('UserConfiguration', ['$resource', 'API_URL', fu
         { update: { method: 'PUT' } });
 }]);
 
-userConfigurationModule.controller('UserConfigurationController', ['$scope', '$modal', 'User', 'UserConfiguration', 'Notebooks', function($scope, $modal, User, UserConfiguration, Notebooks) {
+userConfigurationModule.controller('UserConfigurationController', ['$scope', '$uibModal', 'User', 'UserConfiguration', 'Notebooks', function($scope, $uibModal, User, UserConfiguration, Notebooks) {
 
     $scope.user = User.get();
 
     $scope.showUserConfigurationModal = function(configuration) {
 
-    $modal.open({
+    $uibModal.open({
             templateUrl: 'userConfiguration/updateUserConfigurationModal.html',
             controller: 'userConfigurationModalController',
             resolve: {
@@ -31,7 +31,7 @@ userConfigurationModule.controller('UserConfigurationController', ['$scope', '$m
     };
 }]);
 
-userConfigurationModule.controller('userConfigurationModalController', ['$scope', '$modalInstance', 'user', 'configuration', 'notebooks', function($scope, $modalInstance, user, configuration, notebooks) {
+userConfigurationModule.controller('userConfigurationModalController', ['$scope', '$uibModalInstance', 'user', 'configuration', 'notebooks', function($scope, $uibModalInstance, user, configuration, notebooks) {
 
     $scope.user = user;
     $scope.configuration = configuration;
@@ -39,12 +39,12 @@ userConfigurationModule.controller('userConfigurationModalController', ['$scope'
 
     $scope.save = function () {
         $scope.configuration.$update(function() {
-            $modalInstance.close();
+            $uibModalInstance.close();
         });
     };
 
     $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
+        $uibModalInstance.dismiss('cancel');
     };
 
 }]);

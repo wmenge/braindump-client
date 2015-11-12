@@ -29,7 +29,7 @@ notebooksModule.config(function($stateProvider, $urlRouterProvider) {
 });
 
 // Notebook controller
-notebooksModule.controller('NotebookListController', ['$scope', 'notebooks', '$state', '$modal', '$filter', function($scope, notebooks, $state, $modal, $filter) {
+notebooksModule.controller('NotebookListController', ['$scope', 'notebooks', '$state', '$uibModal', '$filter', function($scope, notebooks, $state, $uibModal, $filter) {
 
     $scope.notebooks = notebooks;
 
@@ -40,7 +40,7 @@ notebooksModule.controller('NotebookListController', ['$scope', 'notebooks', '$s
     };
 
     $scope.showNewNotebookModal = function() {
-        $modal.open({
+        $uibModal.open({
             templateUrl: 'notebooks/newNotebookModal.html',
             controller: 'NotebooksModalController',
             scope: $scope,
@@ -51,7 +51,7 @@ notebooksModule.controller('NotebookListController', ['$scope', 'notebooks', '$s
     };
 
     $scope.showUpdateNotebookModal = function(book) {
-        $modal.open({
+        $uibModal.open({
             templateUrl: 'notebooks/updateNotebookModal.html',
             controller: 'NotebooksModalController',
             scope: $scope,
@@ -91,9 +91,9 @@ notebooksModule.controller('NotebookListController', ['$scope', 'notebooks', '$s
 
 }]);
 
-// Please note that $modalInstance represents a modal window (instance) dependency.
-// It is not the same as the $modal service used above.
-notebooksModule.controller('NotebooksModalController', ['$scope', '$modalInstance', '$state', 'Notebooks', 'book', function($scope, $modalInstance, $state, Notebooks, book) {
+// Please note that $uibModalInstance represents a modal window (instance) dependency.
+// It is not the same as the $uibModal service used above.
+notebooksModule.controller('NotebooksModalController', ['$scope', '$uibModalInstance', '$state', 'Notebooks', 'book', function($scope, $uibModalInstance, $state, Notebooks, book) {
 
     $scope.notebook = angular.copy(book);
     $scope.originalnotebook = book;
@@ -102,7 +102,7 @@ notebooksModule.controller('NotebooksModalController', ['$scope', '$modalInstanc
 
         Notebooks.save($scope.notebook, function(newBook) {
 
-            $modalInstance.close();
+            $uibModalInstance.close();
             
             // Modal inherits scope from NotebookListController
             // add server version of notebook to list
@@ -116,12 +116,12 @@ notebooksModule.controller('NotebooksModalController', ['$scope', '$modalInstanc
     $scope.update = function () {
         $scope.notebook.$update(function() {
             $scope.originalnotebook.title = $scope.notebook.title;
-            $modalInstance.close();
+            $uibModalInstance.close();
         });
     };
 
     $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
+        $uibModalInstance.dismiss('cancel');
     };
 
 }]);

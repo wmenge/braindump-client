@@ -27,10 +27,10 @@
 
         <span ui-view='noteSearch'></span>
 
-        <span id="userConfiguration" ng-controller="UserConfigurationController" ng-init="init()" class="pull-right">
+        <span id="userConfiguration" ng-controller="UserConfigurationController" ng-init="init()" class="pull-right" ng-cloak>
 
-            <div class="btn-group" dropdown>
-                <button type="button" class="navbar-btn btn btn-default dropdown-toggle" dropdown-toggle>
+            <div class="btn-group" uib-dropdown>
+                <button type="button" class="navbar-btn btn btn-default dropdown-toggle" uib-dropdown-toggle>
                     {{user.first_name}} {{user.last_name}} <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" role="menu">   
