@@ -169,7 +169,7 @@ notesModules.controller('NoteDetailController', ['$rootScope', '$scope', '$timeo
     // Trust html entities in title
     // http://stackoverflow.com/questions/7394748/whats-the-right-way-to-decode-a-string-that-has-special-html-entities-in-it?lq=1
     // http://stackoverflow.com/questions/5796718/html-entity-decode
-    $scope.formData.title = decodeHtml($scope.formData.title);
+    $scope.formData.title = ($scope.formData.title) ? decodeHtml($scope.formData.title) : '';
 
     $scope.save = function() {
 
