@@ -9,6 +9,12 @@ module.run(function($http) {
     });
 });
 
+// by default, angular uses some debugging mode (https://code.angularjs.org/1.5.5/docs/guide/production)
+// turn it off!
+module.config(['$compileProvider', function ($compileProvider) {
+  $compileProvider.debugInfoEnabled(false);
+}]);
+
 module.controller('AppController', [ '$scope', '$state', '$location', function($scope, $state, $location) {
 
 }]);
