@@ -24,6 +24,8 @@
                     <span id="save_error" ng-if="save_error" class="text-danger"><span class="glyphicon glyphicon glyphicon-exclamation-sign"></span> Error while saving</span>
                 </p>
             </div>
+
+
 -->
             <div class="form-group">
 
@@ -37,7 +39,7 @@
                 </div>
 
             </div>
-            <trix-editor angular-trix-editor ng-model="formData.content" ng-change="debounceSave()"></trix-editor>
+            <trix-editor angular-trix ng-model="formData.content" trix-change="debounceSave()"></trix-editor>
         </div>
     </div>
 </form>

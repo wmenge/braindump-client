@@ -23,13 +23,16 @@
     "angular-moment": "latest",
     "angular-resource": "1.x",
     "angular-sanitize": "1.x",
-    "angular-trix-editor": "~0.3.2",
+    "angular-trix": "latest",
     "angular-ui-bootstrap-bower": "latest",
     "angular-ui-event": "latest",
     "angular-ui-router": "latest",
     "animate.css": "latest",
     "bootstrap-css-only": "latest",
     "font-awesome-bower": "latest",
-    "trix": "~0.9.0"
+    "trix": "latest"
+  },
+  "resolutions": {
+    "angular": "1.x"
   }
 }
