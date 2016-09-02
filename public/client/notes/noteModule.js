@@ -156,7 +156,7 @@ function decodeHtml(html) {
 }
 
 
-notesModules.controller('NoteDetailController', ['$rootScope', '$scope', '$timeout', '$state', 'note', '$sce', function($rootScope, $scope, $timeout, $state, note, $sce) {
+notesModules.controller('NoteDetailController', ['$rootScope', '$scope', '$timeout', '$state', 'note', '$sce', "$http", 'API_URL', function($rootScope, $scope, $timeout, $state, note, $sce, $http, API_URL) {
 
     // Autosave: http://adamalbrecht.com/2013/10/30/auto-save-your-model-in-angular-js-with-watch-and-debounce/
     var timeout = null;
@@ -187,8 +187,6 @@ notesModules.controller('NoteDetailController', ['$rootScope', '$scope', '$timeo
                 // user could have edited the form during the
                 // REST roundtrip
                 if ($scope.noteForm.$pristine) {
-                    //$scope.formData = angular.copy($scope.note);
-
                     // Trust html entities in title (again)
                     $scope.formData.title = decodeHtml($scope.formData.title);
                 }
@@ -230,14 +228,53 @@ notesModules.controller('NoteDetailController', ['$rootScope', '$scope', '$timeo
     };
 
     $scope.debounceSave = function() {
-        
-        if ($scope.noteForm.$dirty && $scope.noteForm.$valid) {
-            if (timeout) {
-                $timeout.cancel(timeout);
-                timeout = null;
-            }
-            timeout = $timeout($scope.save, 1000 * delay);  // 1000 = 1 second
+
+        if (timeout) {
+            // TODO: also cancel timeouw when switching notes (or better, inform user that changes need to be save, or better: call timeout directly then)
+            $timeout.cancel(timeout);
+            timeout = null;
         }
+        timeout = $timeout($scope.save, 1000 * delay);  // 1000 = 1 second
     };
 
+    $scope.attachmentAdd = function(e, editor) {
+
+        var attachment = e.attachment;
+        if (!attachment.file) return;
+
+        var fd = new FormData();
+        fd.append("file", attachment.file);
+
+        $http.post(API_URL + "/api/files", fd, {
+            withCredentials: true,
+            headers: {'Content-Type': undefined },
+            uploadEventHandlers: {
+                progress: function (e) {
+                    console.log('progress');
+                    console.log(e);
+                    var progress;
+                    progress = e.loaded / e.total * 100;
+                    return attachment.setUploadProgress(progress);
+            }
+        }  
+        }).success(function(response) { 
+
+            attachment.setAttributes({
+                url: API_URL + response,
+                href: API_URL + response,
+            });
+
+            // Bad Hack! Only after a timeout, the definitive html with correct url is available
+            $timeout(function() { 
+                // Trigger change to scope
+                $scope.formData.content = editor.element.innerHTML;
+            }, 100);
+            
+            return true;
+        }
+        ).error(function(response) { 
+            console.log('Error'); // TODO: Error handling 
+        });
+
+    };
 }]);

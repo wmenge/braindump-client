@@ -39,7 +39,7 @@
                 </div>
 
             </div>
-            <trix-editor angular-trix ng-model="formData.content" trix-change="debounceSave()"></trix-editor>
+            <trix-editor angular-trix class="trix-content" ng-model="formData.content" trix-change="debounceSave()" trix-attachment-add="attachmentAdd(e, editor);"></trix-editor>
         </div>
     </div>
 </form>
