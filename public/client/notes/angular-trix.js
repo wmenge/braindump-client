@@ -23,18 +23,12 @@
                     if (ngModel.$modelValue) {
                         element[0].editor.loadHTML(ngModel.$modelValue);
                     }
-                });
-
-                ngModel.$render = function() {
-                    if (element[0].editor) {
-                        element[0].editor.loadHTML(ngModel.$modelValue);
-                    }
 
                     element.on('trix-change', function() {
                         //ngModel.$setViewValue(element.html());
                         ngModel.$setViewValue(Trix.serializeToContentType(element[0], "text/html"))
                     });
-                };
+                });
 
                 var registerEvents = function(type, method) {
                     element[0].addEventListener(type, function(e) {
