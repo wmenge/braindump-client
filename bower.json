@@ -15,7 +15,7 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "1.x",
+    "angular": "latest",
     "angular-animate": "latest",
     "angular-confirm-modal": "latest",
     "angular-http-auth": "latest",
@@ -31,8 +31,5 @@
     "bootstrap-css-only": "latest",
     "font-awesome-bower": "latest",
     "trix": "latest"
-  },
-  "resolutions": {
-    "angular": "1.x"
   }
 }

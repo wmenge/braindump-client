@@ -182,6 +182,7 @@ notesModules.controller('NoteDetailController', ['$rootScope', '$scope', '$timeo
             $scope.noteForm.$setPristine();
 
             var callback = function(modifiedNote) {
+
                 $scope.note = modifiedNote;
                 $scope.formData.id = $scope.note.id;
                 // user could have edited the form during the
@@ -250,10 +251,7 @@ notesModules.controller('NoteDetailController', ['$rootScope', '$scope', '$timeo
             headers: {'Content-Type': undefined },
             uploadEventHandlers: {
                 progress: function (e) {
-                    console.log('progress');
-                    console.log(e);
-                    var progress;
-                    progress = e.loaded / e.total * 100;
+                    var progress = e.loaded / e.total * 100;
                     return attachment.setUploadProgress(progress);
             }
         }  
@@ -264,12 +262,6 @@ notesModules.controller('NoteDetailController', ['$rootScope', '$scope', '$timeo
                 href: API_URL + response,
             });
 
-            // Bad Hack! Only after a timeout, the definitive html with correct url is available
-            $timeout(function() { 
-                // Trigger change to scope
-                $scope.formData.content = editor.element.innerHTML;
-            }, 100);
-            
             return true;
         }
         ).error(function(response) { 
