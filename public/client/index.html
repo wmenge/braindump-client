@@ -8,6 +8,7 @@
 
     <link rel='stylesheet prefetch' href='libs/bootstrap-css-only/css/bootstrap.min.css'>
     <link rel='stylesheet prefetch' href='libs/bootstrap-css-only/css/bootstrap-theme.min.css'>
+    <link rel='stylesheet prefetch' href='libs/angular-ui-notification/dist/angular-ui-notification.min.css'>
     <link rel='stylesheet prefetch' href='libs/font-awesome-bower/css/font-awesome.css'>
     <link rel='stylesheet prefetch' href='libs/angular-loading-bar/build/loading-bar.min.css'>
     <link rel='stylesheet prefetch' href='libs/animate.css/animate.min.css'>
@@ -34,7 +35,8 @@
                 <button type="button" class="navbar-btn btn btn-default dropdown-toggle" uib-dropdown-toggle>
                     {{user.first_name}} {{user.last_name}} <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu" role="menu">   
+                <ul class="dropdown-menu" role="menu">
+                    <li><a ng-click="showUserPasswordModal()"><span class="glyphicon glyphicon-lock"></span> Change password...</a></li>
                     <li><a ng-click="showUserConfigurationModal()"><span class="glyphicon glyphicon-cog"></span> Preferences...</a></li>
                 </ul>
             </div>
@@ -64,6 +66,7 @@
     <script type="text/javascript" src="libs/angular-animate/angular-animate.min.js"></script>
     <script type="text/javascript" src="libs/angular-ui-bootstrap-bower/ui-bootstrap.min.js"></script>
     <script type="text/javascript" src="libs/angular-ui-bootstrap-bower/ui-bootstrap-tpls.min.js"></script>
+    <script type="text/javascript" src="libs/angular-ui-notification/dist/angular-ui-notification.min.js"></script>    
     <script type="text/javascript" src='libs/angular-sanitize/angular-sanitize.min.js'></script>
     <script type="text/javascript" src='libs/angular-loading-bar/build/loading-bar.min.js'></script>
     <script type="text/javascript" src='libs/angular-confirm-modal/angular-confirm.js'></script>

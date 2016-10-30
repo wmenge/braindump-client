@@ -25,6 +25,7 @@
     "angular-sanitize": "1.x",
     "angular-trix": "latest",
     "angular-ui-bootstrap-bower": "latest",
+    "angular-ui-notification": "^0.2.0",
     "angular-ui-event": "latest",
     "angular-ui-router": "latest",
     "animate.css": "latest",
