@@ -45,6 +45,28 @@ userConfigurationModule.controller('UserConfigurationController', ['$scope', '$u
 
 }]);
 
+// http://stackoverflow.com/questions/31671221/angular-ng-messages-how-to-check-password-confirmation
+var compareTo = function() {
+    return {
+        require: "ngModel",
+        scope: {
+            otherModelValue: "=compareTo"
+        },
+        link: function(scope, element, attributes, ngModel) {
+
+            ngModel.$validators.compareTo = function(modelValue) {
+                return modelValue == scope.otherModelValue;
+            };
+
+            scope.$watch("otherModelValue", function() {
+                ngModel.$validate();
+            });
+        }
+    };
+};
+
+userConfigurationModule.directive("compareTo", compareTo);
+
 userConfigurationModule.controller('userPasswordModalController', ['$scope', '$uibModalInstance', 'user', 'Notification', function($scope, $uibModalInstance, user, Notification) {
 
     $scope.alerts = [];
@@ -69,17 +91,21 @@ userConfigurationModule.controller('userPasswordModalController', ['$scope', '$u
 
 }]);
 
-userConfigurationModule.controller('userConfigurationModalController', ['$scope', '$uibModalInstance', 'user', 'configuration', 'notebooks', function($scope, $uibModalInstance, user, configuration, notebooks) {
+userConfigurationModule.controller('userConfigurationModalController', ['$scope', '$uibModalInstance', 'user', 'configuration', 'notebooks', 'Notification', function($scope, $uibModalInstance, user, configuration, notebooks, Notification) {
 
     $scope.user = user;
     $scope.configuration = configuration;
     $scope.notebooks = notebooks;
 
     $scope.save = function () {
-        // Todo: Error handling
-        $scope.configuration.$update(function() {
-            $uibModalInstance.close();
-        });
+        $scope.configuration.$update(
+            function() { // success
+                Notification.success('Preferences have been saved');
+                $uibModalInstance.close();
+            },
+            function(response) { // error
+                $scope.alerts.push({ type: 'danger', msg: response.data});
+            });
     };
 
     $scope.cancel = function () {
