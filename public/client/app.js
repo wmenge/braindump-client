@@ -9,6 +9,30 @@ module.run(function($http) {
     });
 });
 
+/*angular.module('BrainDumpApp').config(['$provide', '$httpProvider', function($provide, $httpProvider) {
+
+	$httpProvider.interceptors.push(function($q, $injector) {
+
+		// https://github.com/alexcrack/angular-ui-notification/issues/32
+		var notification = null;
+        
+        var getNotification = function() {
+            if (!notification) {
+                notification = $injector.get('Notification');
+            }
+            return notification;
+        };
+
+  		return {
+   			responseError: function(response) {
+            	getNotification().error(response.statusText);
+        	}
+  		};
+	});
+
+}]);*/
+
+
 // by default, angular uses some debugging mode (https://code.angularjs.org/1.5.5/docs/guide/production)
 // turn it off!
 module.config(['$compileProvider', function ($compileProvider) {
