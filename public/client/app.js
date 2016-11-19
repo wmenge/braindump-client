@@ -9,7 +9,8 @@ module.run(function($http) {
     });
 });
 
-/*angular.module('BrainDumpApp').config(['$provide', '$httpProvider', function($provide, $httpProvider) {
+// Generic error handler for all $http requests
+angular.module('BrainDumpApp').config(['$provide', '$httpProvider', function($provide, $httpProvider) {
 
 	$httpProvider.interceptors.push(function($q, $injector) {
 
@@ -30,8 +31,7 @@ module.run(function($http) {
   		};
 	});
 
-}]);*/
-
+}]);
 
 // by default, angular uses some debugging mode (https://code.angularjs.org/1.5.5/docs/guide/production)
 // turn it off!
